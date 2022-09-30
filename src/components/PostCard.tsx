@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export type PostDataType = {
+  description: string
   featuredImage: string
   image: string | null
   path: string
@@ -17,7 +18,7 @@ export function PostCard({ post }: { post: PostDataType }) {
           <article
             itemScope
             itemType="http://schema.org/Article"
-            className="h-full flex flex-col bg-white border border-gray-100 shadow-md rounded-xl overflow-hidden hover:shadow-2xl"
+            className="h-full flex flex-col border border-gray-100 shadow-md rounded-xl overflow-hidden hover:shadow-2xl"
             style={{
               gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
             }}
@@ -37,6 +38,13 @@ export function PostCard({ post }: { post: PostDataType }) {
                 <h2 className="font-bold text-xl">
                   <span itemProp="headline">{post.title}</span>
                 </h2>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: post.description,
+                  }}
+                  itemProp="description"
+                  className="text-gray-500"
+                />
               </div>
             </section>
           </article>
