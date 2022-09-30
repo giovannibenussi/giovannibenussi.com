@@ -1,0 +1,79 @@
+---
+title: "How to Get the Return Type of a Function in TypeScript"
+date: "2022-09-15T09:40:00.000Z"
+description: "Write flexible TypeScript code by using this TypeScript function"
+featuredImage: ./featured-image.jpg
+featuredImageUnsplashAuthor: Renato Ramos Puma
+featuredImageUnsplashURL: https://unsplash.com/@renatoramospuma?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+featuredImageUnsplashURLLink: https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+draft: false
+---
+
+TypeScript [provides some handy methods](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype) to facilitate type transformations. One of them is `ReturnType`, which allows us to get the return type of a function, which can be useful to avoid hardcoding types in your code that can break at any moment.
+
+Continue reading to learn how to use the `ReturnType` function.
+
+# TLDR
+
+Use the `ReturnType` utility:
+
+```ts
+function sayHi(name: string) {
+  return `Hi, ${name}!`
+}
+
+sayHi('Giovanni') // Hi, Giovanni!
+type SayHiReturnType = ReturnType<typeof sayHi> // string
+```
+
+
+# Get the Return Type of a Function in Typescript
+
+Let's start with a simple function that returns a string:
+
+```ts
+function sayHi(name: string) {
+  return `Hi, ${name}!`
+}
+
+sayHi('Giovanni') // Hi, Giovanni!
+```
+
+To get the return type of the `sayHi` function, we could use the `ReturnType` utility provided globally by TypeScript:
+
+```ts
+type SayHiReturnType = ReturnType<typeof sayHi>
+```
+
+`SayHiReturnType` value will be the `string` type.
+
+# Get the Return Type of an Async Function in Typescript
+
+We need to update our code a bit to work with promises.
+
+
+```ts
+function sayHi(name: string) {
+  return Promise.resolve(`Hi, ${name}!`);
+}
+
+type SayHiReturnType = ReturnType<typeof sayHi>
+```
+
+Now, `SayHiReturnType` is equal to `Promise<string>`, which may not be what we are expecting.
+
+If we want to get the return type of our function, we need to use the [Awaited](https://www.typescriptlang.org/docs/handbook/utility-types.html#awaitedtype) utility:
+
+```ts
+type SayHiReturnType = Awaited<ReturnType<typeof sayHi>>;
+```
+
+Now `SayHiReturnType` has a value of `string`.
+
+# Conclusion
+
+TypeScript has powerful yet simple utility functions like `ReturnType` that we can use to build resilient applications.
+
+Start using them and you'll notice how you'll need to do less changes when updating something.
+
+You can [DM on Twitter](https://twitter.com/giovannibenussi) if you have any question or just want to say hi 😄 I'll be glad to talk with you!

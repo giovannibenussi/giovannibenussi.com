@@ -1,0 +1,121 @@
+---
+title: "Redirects and Rewrites on Next.js"
+date: "2022-09-14T09:40:00.000Z"
+description: "Redirecting and proxying requests with Next.js"
+featuredImage: ./featured-image.jpg
+featuredImageUnsplashAuthor: Robert Ruggiero
+featuredImageUnsplashURL: https://unsplash.com/@robert2301?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+featuredImageUnsplashURLLink: https://unsplash.com/s/photos/direction?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+draft: false
+---
+
+URL changes very frequently, and sometimes you want to keep an old url working, or maybe you want to proxy a request. Next.js makes this task easy to accomplish without an additional proxy server like Nginx.
+
+# Redirecting Requests
+To [redirect requests in Next.js](https://nextjs.org/docs/api-reference/next.config.js/redirects), you can set an `async` `redirects` function in your `next.config.js` file:
+
+```js
+// next.config.js
+
+module.exports = {
+  async redirects() {
+    return [
+      {
+        source: '/index',
+        destination: '/',
+        permanent: true,
+      },
+    ]
+  },
+}
+```
+
+In the previous example, any request to `/index` will be redirected to `/` permanently (with a 308 HTTP status).
+
+If you want a temporary redirect, you can set `permanent: false` and the server will return a 307 HTTP status code.
+
+You can add multiple entries to the return value of the `redirects` function to add multiple redirects.
+
+# Proxying Requests
+Your Next.js application can act as a proxy and handle requests while keeping the current url as opposed to redirects that change the url to the destination url.
+
+```js
+// next.config.js
+
+module.exports = {
+  async rewrites() {
+    return [
+      {
+        source: '/about',
+        destination: '/',
+      },
+    ]
+  },
+}
+```
+
+In this case the user will see the url as `/about` but the content of the page will be the content of the `/` path.
+
+You can redirect to other domains too:
+
+```js
+// next.config.js
+
+module.exports = {
+  async rewrites() {
+    return [
+      {
+        source: '/blog',
+        destination: 'https://giovannibenussi.com/',
+      },
+    ]
+  },
+}
+```
+
+# Path Matching
+
+If you want to keep the parameters in the url, you need to specify a patch matching variable as follows:
+
+```js
+// next.config.js
+
+module.exports = {
+  async rewrites() {
+    return [
+      {
+      source: '/blog/:author/:postID',
+        destination: 'https://giovannibenussi.com/blog/:postID',
+      },
+    ]
+  },
+}
+```
+
+With the rewrite defined above, a request to `/blog/giovannibenussi/1` will be redirected to `https://giovannibenussi.com/blog/1`.
+
+If you want to catch all paths, you can use a wildcard path with `*`:
+
+```js
+// next.config.js
+
+module.exports = {
+  async rewrites() {
+    return [
+      {
+        source: '/blog/:path*',
+        destination: 'https://giovannibenussi.com/:path*',
+      },
+    ]
+  },
+}
+```
+
+With the rewrite defined above, a request to `/blog/hello/world/this/is/a/post` will be redirected to `https://giovannibenussi.com/hello/world/this/is/a/post` (notice that `/blog` is not included in the destination url because is not included in the catch all pattern).
+
+# Conclusion
+
+Next.js provides handy methods to redirect and proxy requests. Without this feature, we would need to setup a separate server like Nginx and handle the redirects ourselves, so this feature is very useful to keep everything in a single application.
+
+As always, [you can reach me out on Twitter](https://twitter.com/giovannibenussi) if you have any question and I'll be glad to help you!
+

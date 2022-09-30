@@ -1,0 +1,121 @@
+---
+title: "Type-safe Environment Variables in Cloudflare Workers"
+date: "2022-08-17T09:40:00.000Z"
+description: "How to set types for environment variables in Cloudflare Workers"
+featuredImage: ./featured-image.jpg
+featuredImageUnsplashAuthor: Martin Sanchez
+featuredImageUnsplashURL: https://unsplash.com/@martinsanchez?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+featuredImageUnsplashURLLink: https://unsplash.com/s/photos/orange-world?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+draft: false
+---
+
+TLDR; Define an `EnvType` type and set it to the `env` variable in your workers:
+
+```ts
+type EnvType = {
+  API_VERSION: string;
+};
+
+export default {
+  fetch(request: Request, env: EnvType): Response {
+    return new Response(`The version of the API is ${env.API_VERSION}`);
+  },
+};
+```
+
+Continue reading for a more detailed explanation.
+
+## Adding Environment Variables
+
+Let's start with the most basic handler for Workers with TypeScript:
+
+```ts
+export default {
+  fetch(request: Request, env: EnvType): Response {
+    return new Response(`The version of the API is ${env.API_VERSION}`);
+  },
+};
+```
+
+We'll add an environment variable with the current API version to our `wrangler.toml` file:
+
+```yaml
+name = "workers-typescript-environment-variables"
+main = "src/index.ts"
+compatibility_date = "2022-08-16"
+
+[vars]
+API_VERSION = "v2"
+```
+
+Restart the server and refresh.
+
+As you can see, we set the `API_VERSION` environment variable to the string `v2`.
+
+We can reference this variable as follows (let's use `any` for now):
+
+```ts
+export default {
+  fetch(request: Request, env: any): Response {
+    return new Response(`The version of the API is ${env.API_VERSION}`);
+  },
+};
+```
+
+## Without Type Safety
+You can wrongly assume that `API_VERSION` is a number, so anything stops you from doing arythmethic with it:
+
+```ts
+export default {
+  fetch(request: Request, env: any): Response {
+    return new Response(`The previous version of the API is ${env.API_VERSION - 1}`);
+  },
+};
+```
+
+However, the output of the previous code is wrong:
+
+> The version of the API is NaN
+
+## Defining Our Environment Type
+
+To avoid this issue, let's define a custom TypeScript type:
+
+```ts
+type EnvType = {
+  API_VERSION: string;
+};
+```
+
+Then we can set this type to the `env` parameter:
+
+```ts
+export default {
+  fetch(request: Request, env: EnvType): Response {
+    return new Response(`The previous version of the API is ${env.API_VERSION - 1}`);
+  },
+};
+```
+
+Now we get a TypeScript error:
+
+> [tsserver 2362] [E] The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+
+This is our full working code:
+
+```ts
+type EnvType = {
+  API_VERSION: string;
+};
+
+export default {
+  fetch(request: Request, env: EnvType): Response {
+    return new Response(`The version of the API is ${env.API_VERSION}`);
+  },
+};
+```
+
+As you can see, we just use plain TypeScript to get type safety for our workers.
+
+As always, you can [find me on Twitter](https://twitter.com/giovannibenussi) whenever you want.
+
