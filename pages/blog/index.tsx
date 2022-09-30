@@ -28,9 +28,12 @@ export const getStaticProps: GetStaticProps = async () => {
       slug,
     })
   }
+  const sortedPosts = posts.sort((post1, post2) =>
+    post2?.date > post1?.date ? 1 : -1
+  )
 
   return {
-    props: { posts },
+    props: { posts: sortedPosts },
   }
 }
 
