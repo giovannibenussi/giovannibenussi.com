@@ -1,16 +1,29 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { TimeIcon } from '@chakra-ui/icons'
+import { formatDate } from 'lib/util'
+import { Badge } from 'components/Badge'
 
 export type PostDataType = {
+  bestOf?: boolean
+  draft?: boolean
+  date: string
   description: string
   featuredImage: string
+  hot?: boolean
   image: string | null
   path: string
   slug: string
   title: string
 }
 
-export function PostCard({ post }: { post: PostDataType }) {
+export function PostCard({
+  newest,
+  post,
+}: {
+  newest: boolean
+  post: PostDataType
+}) {
   return (
     <li>
       <Link href={post.path}>
@@ -26,7 +39,7 @@ export function PostCard({ post }: { post: PostDataType }) {
             <Image
               height={15 * 16}
               width={15 * 16}
-              alt="Example description"
+              alt=""
               src={`/images/blog/${post.slug}.jpg`}
               style={{
                 objectFit: 'cover',
@@ -34,7 +47,7 @@ export function PostCard({ post }: { post: PostDataType }) {
               }}
             />
             <section className="px-4 py-4 flex flex-col flex-grow hover:text-blue-500 text-black">
-              <div>
+              <div className="h-full flex flex-col justify-between">
                 <h2 className="font-bold text-xl">
                   <span itemProp="headline">{post.title}</span>
                 </h2>
@@ -43,8 +56,16 @@ export function PostCard({ post }: { post: PostDataType }) {
                     __html: post.description,
                   }}
                   itemProp="description"
-                  className="text-gray-500"
+                  className="text-gray-500 mb-4"
                 />
+              </div>
+              <div className="flex mt-auto justify-between items-center">
+                <div className="flex items-center text-gray-500">
+                  <TimeIcon />
+                  &nbsp;
+                  <small>{formatDate(post.date)}</small>
+                </div>
+                <Badge post={post} newest={newest} />
               </div>
             </section>
           </article>

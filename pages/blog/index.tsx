@@ -7,11 +7,9 @@ import { getAllMDXFiles, pageSlug } from './[...slug]'
 import { serialize } from 'next-mdx-remote/serialize'
 
 export const getStaticProps: GetStaticProps = async () => {
-  console.log('1:', 1)
   const fg = require('fast-glob')
   const fs = require('fs')
   const pages = await getAllMDXFiles(fg)
-  console.log('pages:', pages)
   const posts: Array<PostDataType> = []
   for (const page of pages) {
     const data = fs.readFileSync(page.toString())
@@ -31,7 +29,6 @@ export const getStaticProps: GetStaticProps = async () => {
     })
   }
 
-  console.log('posts:', posts)
   return {
     props: { posts },
   }
@@ -42,6 +39,8 @@ type HomeProps = {
 }
 
 const Home: NextPage<HomeProps> = ({ posts }) => {
+  const newestIndex = posts.findIndex((post) => !post.draft)
+
   return (
     <div>
       <Head>
@@ -59,9 +58,11 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
                 gridTemplateColumns: 'repeat(auto-fit, minmax(18rem, 1fr))',
               }}
             >
-              {posts.map((post: PostDataType, i) => (
-                <PostCard key={i} post={post} />
-              ))}
+              {posts.map((post: PostDataType, i) => {
+                return (
+                  <PostCard key={i} post={post} newest={i === newestIndex} />
+                )
+              })}
             </ol>
           </div>
         </div>

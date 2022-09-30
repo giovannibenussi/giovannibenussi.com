@@ -8,7 +8,6 @@ import remarkPrism from 'remark-prism'
 import path from 'path'
 
 function removeSuffix(text: string, suffix: string): string {
-  console.log('text.endsWith(suffix:', text.endsWith(suffix))
   return text.endsWith(suffix) ? text.slice(0, -suffix.length) : text
 }
 
@@ -43,10 +42,8 @@ type Params = {
 export const getStaticProps: GetStaticProps<any, Params> = async (context) => {
   const fs = require('fs')
   const { slug } = context.params || {}
-  console.log('slug:', slug)
   const articlesPath = path.join(process.cwd(), 'src/blog')
   const articleDir = path.join(articlesPath, `${slug}/index.mdx`)
-  console.log('articleDir:', articleDir)
 
   //const source = fs.readFileSync(articleDir)
   const source = fs.readFileSync(articleDir)
