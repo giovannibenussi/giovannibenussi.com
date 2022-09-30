@@ -1,0 +1,82 @@
+---
+title: "List the Size of Every File in a Folder"
+date: "2022-08-16T09:05:00.000Z"
+description: "A function to easily get the size of every item in a given path"
+featuredImage: ./featured-image.jpg
+featuredImageUnsplashAuthor: Glenn Carstens-Peters
+featuredImageUnsplashURL: https://unsplash.com/@glenncarstenspeters?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+featuredImageUnsplashURLLink: https://unsplash.com/s/photos/list?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+draft: false
+---
+
+TLDR; Add the following function to get the size of your files:
+
+```bash
+duu() {
+  local files="${1:-$(ls -A)}"
+  du -hsc $files
+}
+```
+
+The usage is as follows:
+
+```bash
+duu                  # All files (including hidden ones) in the current directory
+duu *                # All visible files in the currrent directory
+duu *.json           # All json files
+duu directory/*.json # All json files in the `directory` folder
+```
+
+And that's it. If you want to understand what's going on, continue reading!
+
+## The `du` command
+
+I'm a big fan of using a shell for every task when working, and get the size for an item is not an exception.
+
+[The du command](https://man7.org/linux/man-pages/man1/du.1.html) estimates the space usage on disk for a set of files or directories. The `du` command without arguments lists the space usage of all files in the current directory and subdirectories.
+
+You can specify a target like a folder or file as a parameter:
+
+```bash
+du file.txt
+du directory
+du directory/*.json
+```
+
+You can instruct `du` to output a human readable size format (using KB, M, and G) with the `-h` flag:
+
+```bash
+du -h *
+# 1,0G    large.json
+# 5,0M    medium.json
+# 4,0K    small.json
+```
+
+By default, `du` will iterate over directories. You can avoid this behavior by passing the `-s` (summarize) flag. I strongly recommend to have this flag on always because if not, the command will be extremely slow on projects with a lot files on subdirectories (I'm looking at you _node_modules_!).
+
+And lastly, you can add the `-c` (grand total) flag to get the total size of the files analyzed:
+
+```bash
+du -h *
+# 1,0G    large.json
+# 5,0M    medium.json
+# 4,0K    small.json
+# 1,0G    total # <- This is the sum of the analyzed files
+```
+
+## Creating a Bash Function
+The flags listed in the previous section are my favorite ones, so I use them always. This results in the `du -hsc` command, which is a bit long and easy to make a mistake while typing it.
+
+To avoid type this command always, you can create a function in your `.bashrc` file as follows:
+
+```bash
+duu() {
+  local files="${1:-$(ls -A)}"
+  du -hsc $files
+}
+```
+
+The `local ...`  line assigns the `files` variable the first parameter provided to the command or sets it to `ls -A` otherwise (all files in the current directory, including hidden ones). We pass this value to the `du` command in the line below.
+
+And that's it. You can copy this function whenever you want and simple run something like `du` to get the disk space of all files or `duu *.json` if you want to be more specific!
+
