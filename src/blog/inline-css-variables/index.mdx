@@ -1,0 +1,49 @@
+---
+title: Inline CSS Variables
+date: "2021-06-14T08:20:00.000Z"
+description: "How to set CSS variables with inline styles"
+featuredImage: ./featured-image.jpg
+draft: false
+---
+import Basic from './Examples/Basic'
+import InlineStyle from './Examples/InlineStyle'
+
+[CSS custom
+properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties), aka CSS variables allow us to define custom properties, or variables, to use in our CSS.
+
+Let's say we want to define a custom color for a button. We could use the
+following CSS:
+
+```css
+.custom-button {
+  /* Other styles ommited... */
+  --background-color: #bfdbfe;
+  background: var(--background-color);
+}
+```
+
+With the following HTML:
+
+```html
+<button class='custom-button'>Click Me!</button>
+```
+
+It produces:
+
+<Basic />
+
+You can update the custom property by using [inline
+styles](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/style):
+
+```html
+<button class='custom-button' style="--background-color: lightgreen">Click Me!</button>
+```
+
+<InlineStyle />
+
+This could be very useful in some cases. For example, you could have a grid
+component and you may want to specify the number of columns and rows with CSS variables:
+
+```html
+<div class="grid" style="--columns: 4; ---rows: 8">...</div>
+```

@@ -1,0 +1,7 @@
+.wrapper p {
+  background-color: lightblue;
+}
+
+.wrapper h1 ~ p {
+  background-color: lightgreen;
+}

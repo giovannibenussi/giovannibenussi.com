@@ -1,0 +1,10 @@
+.wrapper {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.wrapper > * + * {
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+}

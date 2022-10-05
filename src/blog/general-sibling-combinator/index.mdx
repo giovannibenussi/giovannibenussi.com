@@ -1,0 +1,79 @@
+---
+title: General Sibling Combinator (~) in CSS
+date: "2021-05-05T08:00:00.000Z"
+description: "How to target very specific elements without recurring to Javascript"
+featuredImage: ./featured-image.png
+featuredImageFit: contain
+---
+import CanIUse from './../../components/CanIUse'
+import GSCFirstExample from './Examples/GSCFirstExample'
+import GSCSecondExample from './Examples/GSCSecondExample'
+
+## What's the General Sibling Combinator?
+
+<CanIUse
+  name='General Sibling Combinator'
+  support='96.56%'
+  canIUseURL='https://caniuse.com/?search=general%20sibling'
+  docURL='https://developer.mozilla.org/en-US/docs/Web/CSS/General_sibling_combinator'
+  w3cURL='https://drafts.csswg.org/selectors-3/#general-sibling-combinators'
+/>
+
+[According to MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/General_sibling_combinator):
+
+> The general sibling combinator (~) separates two selectors and matches all iterations of the second element, that are following the first element (though not necessarily immediately), and are children of the same parent element.
+
+In other words, it matches all elements that follows a certain element as long
+as they share the same parent.
+
+Let's see an example of this:
+
+```css
+p {
+  background-color: lightblue;
+}
+
+h1 ~ p {
+  background-color: lightgreen;
+}
+```
+
+The previous CSS with this markup:
+
+```html
+<p>Before header 1</p>
+<p>Before header 2</p>
+<h1>Header</h1>
+<p>After header 1</p>
+<p>After header 2</p>
+```
+
+Will produce the following output:
+
+<GSCFirstExample />
+
+This selector only matches direct childrens. Keeping the same previous CSS but changing
+the markup to this:
+
+```html
+<p>Before header 1</p>
+<p>Before header 2</p>
+<h1 className="font-bold text-xl">Header</h1>
+<p>After header 1</p>
+<p>After header 2</p>
+<div>
+  <p>Nested paragraph</p>
+</div>
+```
+
+Produces the following output:
+
+<GSCSecondExample />
+
+## Conclusion
+
+The general sibling combinator gives us a convenient and precise way to match
+elements. Now that you have it in your toolbelt, be aware of opportunities to
+use it and let me know how it goes!
+
+Do you have any question? Reach me out on [message me on Twitter](https://twitter.com/giovannibenussi) whenever you want.

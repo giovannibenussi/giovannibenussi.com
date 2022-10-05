@@ -9,7 +9,10 @@ type BlogPostLayoutType = {
 export function BlogPostLayout({ frontmatter, children }: BlogPostLayoutType) {
   return (
     <Layout>
-      <div className="prose dark:prose-invert m-auto">
+      <div
+        className="content-padding prose m-auto dark:prose-invert"
+        style={{ maxWidth: '55rem' }}
+      >
         <h1>{frontmatter.title}</h1>
         {children}
       </div>

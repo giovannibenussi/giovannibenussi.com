@@ -1,0 +1,11 @@
+.button {
+  padding: 1rem 1%;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .button {
+    padding-left: 2%;
+    padding-right: 2%;
+  }
+}

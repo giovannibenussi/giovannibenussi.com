@@ -1,4 +1,5 @@
 @import './prism-material-light.css';
+@import './buttons.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,7 +12,19 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+:root {
+  --content-padding: 2rem;
+}
+
 .content {
-  margin: auto !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   max-width: 75rem;
+  padding-left: var(--content-padding);
+  padding-right: var(--content-padding);
+}
+
+.content-padding {
+  padding-left: var(--content-padding);
+  padding-right: var(--content-padding);
 }

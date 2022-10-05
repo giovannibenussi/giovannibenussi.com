@@ -1,0 +1,4 @@
+.wrapper {
+  --background-color: #bfdbfe;
+  background: var(--background-color);
+}

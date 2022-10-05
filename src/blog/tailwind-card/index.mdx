@@ -1,0 +1,272 @@
+---
+title: Replicating Tailwind Testimonials Component
+date: "2021-07-13T09:50:00.000Z"
+description: "Step by step of how to replicate the Tailwind's testimonials component from its official website."
+featuredImage: ./tailwind-com-card.png
+featuredImageFit: contain
+---
+import CardBase from './Examples/CardBase'
+import CardWithGradientRounded from './Examples/CardWithGradientRounded'
+import Gradient from './Examples/Gradient'
+import CardWithGradient from './Examples/CardWithGradient'
+import CardWithGradientRoundedFailedWithOverflow from './Examples/CardWithGradientRoundedFailedWithOverflow'
+import CardWithAvatar from './Examples/CardWithAvatar'
+import CardWithAvatarOrganized from './Examples/CardWithAvatarOrganized'
+import CardWithQuote from './Examples/CardWithQuote'
+import CardWithQuoteIcon from './Examples/CardWithQuoteIcon'
+import CardWithTwitter from './Examples/CardWithTwitter'
+import CardWithAnimation from './Examples/CardWithAnimation'
+import Quote from './Examples/quote.inline.svg'
+
+Have you seen the awesome testimonials section from <a href="https://tailwindcss.com" target='_blank'>Tailwind CSS</a>? It looks like this:
+
+<img src='./tailwind-com-cards.png' className='w-full' />
+
+Today, we'll replicate it using, well... Yes! Tailwind!
+## What We'll Build
+
+Here's how our card will look at the end of this tutorial:
+
+<CardWithAnimation />
+
+*If you're using a mouse, you can hover the card to see a small rotation animation.*
+
+## Getting Started
+
+Let's add the barebones of our card:
+
+```html
+<div class="w-[30rem] shadow-xl">
+  <div class="p-4">Tailwind Rocks! 🤘</div>
+  <div class="p-4">
+    <p>Giovanni Benussi</p>
+    <p>Software Developer</p>
+  </div>
+</div>
+```
+
+<CardBase />
+
+[Try it online here](https://play.tailwindcss.com/bw7EZ5PsCj). Here's how it looks:
+
+We have two sections with some padding and a parent element with a shadow and a
+fixed width of 30rem.
+
+Let's add some color by by adding a gradient to the name section:
+
+```html
+<div class="w-[30rem] shadow-xl rounded-xl">
+  <div class="p-4 bg-white">Tailwind Rocks! 🤘</div>
+  <div class="p-4 text-white bg-gradient-to-br from-yellow-500 to-pink-600">
+    <p>Giovanni Benussi</p>
+    <p>Software Developer</p>
+  </div>
+</div>
+```
+
+<CardWithGradient />
+
+[Try it online](https://play.tailwindcss.com/qhHsi9GrPL).
+
+We added the following classes:
+
+* Quote section:
+  * `bg-white`: set the background to white.
+* Name section:
+  * `text-white`: set the font size to white.
+  * `bg-gradient-to-br`: linear gradient with direction to the right.
+  * `from-yellow-500`: sets the first color in the gradient to yellow.
+  * `to-pink-600`: sets the last color in the gradient to pink.
+
+Let's add some rounded corners. It becomes a bit tricky here. If you add a
+rounded corner to the parent element, the gradient at the bottom doesn't look rounded as you can see below. A simple fix is to add the class `overflow-hidden` to don't allow the gradient to be displayed beyond the parent's limits. Below you can see an example of this with a checkbox to toggle the overflow setting so you can see the effect that it has:
+
+<CardWithGradientRoundedFailedWithOverflow />
+
+[Try it online](https://play.tailwindcss.com/GEddXRqznb).
+
+However, even though it works, I prefer to not use `overflow-hidden` because it
+doesn't anticipate to different content sizes, so it may end up hiding content
+it it's too large.
+
+A better solution is to add a rounded corner to each section:
+
+* Quote section:
+  * `rounded-t-xl`: adds a rounded top.
+* Name section:
+  * `rounded-b-xl`: adds a rounded bottom.
+
+Here's how our html looks after this change:
+
+```html
+<div class="w-[30rem] shadow-xl">
+  <div class="p-4 bg-white rounded-t-xl">Tailwind Rocks! 🤘</div>
+  <div class="rounded-b-xl p-4 text-white bg-gradient-to-br from-yellow-500 to-pink-600">
+    <p>Giovanni Benussi</p>
+    <p>Software Developer</p>
+  </div>
+</div>
+```
+
+<CardWithGradientRounded />
+
+[Try it online](https://play.tailwindcss.com/XVrBSlPpBL).
+
+Nice! We can proceed by adding an avatar now:
+
+```html
+<div class="w-[30rem] shadow-xl">
+  <div class="p-4 bg-white rounded-t-xl">Tailwind Rocks! 🤘</div>
+  <div class="rounded-b-xl text-white p-4 bg-gradient-to-br from-yellow-500 to-pink-600">
+    <img
+      src="https://pbs.twimg.com/profile_images/1387529038361681926/qcGMeE2k_400x400.jpg"
+      class="w-16 h-16 object-cover object-top rounded-full border-4 border-white"
+    />
+    <p>Giovanni Benussi</p>
+    <p>Software Developer</p>
+  </div>
+</div>
+```
+
+<CardWithAvatar />
+
+[Try it online](https://play.tailwindcss.com/UsjVy8YF9Q).
+
+The name section needs a bit of order, so we're going to add a flexbox container to organize it:
+
+```html
+<div class="w-[30rem] shadow-xl">
+  <div class="p-4 bg-white rounded-t-xl">Tailwind Rocks! 🤘</div>
+  <div class="text-white rounded-b-xl p-4 bg-gradient-to-br from-yellow-500 to-pink-600 p-4 flex items-center gap-4 h-32">
+    <img
+      src="https://pbs.twimg.com/profile_images/1387529038361681926/qcGMeE2k_400x400.jpg"
+      class="w-16 h-16 object-cover object-top rounded-full border-4 border-white"
+    />
+    <div>
+      <p>Giovanni Benussi</p>
+      <p>Software Developer</p>
+    </div>
+  </div>
+</div>
+```
+
+[Try it online](https://play.tailwindcss.com/iVE9KLD3Qj).
+
+I added a div for the name section so it doesn't follow the flex direction.
+Below you can see how it looks now.
+
+<CardWithAvatarOrganized />
+
+Our card components looks very good now. Let's style the quotation text to match our design.
+
+Let's start by adding the following SVG that I took from the current Tailwind's website:
+
+```svg
+<svg width="45" height="36" class="mb-5 fill-current"><path d="M13.415.001C6.07 5.185.887 13.681.887 23.041c0 7.632 4.608 12.096 9.936 12.096 5.04 0 8.784-4.032 8.784-8.784 0-4.752-3.312-8.208-7.632-8.208-.864 0-2.016.144-2.304.288.72-4.896 5.328-10.656 9.936-13.536L13.415.001zm24.768 0c-7.2 5.184-12.384 13.68-12.384 23.04 0 7.632 4.608 12.096 9.936 12.096 4.896 0 8.784-4.032 8.784-8.784 0-4.752-3.456-8.208-7.776-8.208-.864 0-1.872.144-2.16.288.72-4.896 5.184-10.656 9.792-13.536L38.183.001z"></path></svg>
+```
+
+It renders the following element:
+
+<Quote />
+
+You don't need to understand how the SVG works, you can proceed to paste it directly as below:
+
+```html
+<div class="w-[30rem] shadow-xl">
+  <div class="p-4 bg-white rounded-t-xl">
+    <div class="fill-current text-yellow-500 mb-4 opacity-20">
+    <!-- Quote SVG -->
+    </div>
+    Tailwind Rocks! 🤘
+  </div>
+  <div class="text-white rounded-b-xl p-4 bg-gradient-to-br from-yellow-500 to-pink-600 p-4 flex items-center gap-4 h-32">
+    <img
+      src="https://pbs.twimg.com/profile_images/1387529038361681926/qcGMeE2k_400x400.jpg"
+      class="w-16 h-16 object-cover object-top rounded-full border-4 border-white"
+    />
+    <div>
+      <p>Giovanni Benussi</p>
+      <p>Software Developer</p>
+    </div>
+  </div>
+</div>
+```
+
+<CardWithQuoteIcon />
+
+[Try it online](https://play.tailwindcss.com/prxOISkGKb).
+
+We're almost done. Let's add a Twitter icon so it looks like our design!
+
+Here's the SVG for the Twitter icon taken from the Tailwind site:
+
+```svg
+<svg width="33" height="32" fill="currentColor"><path d="M32.411 6.584c-1.113.493-2.309.826-3.566.977a6.228 6.228 0 002.73-3.437 12.4 12.4 0 01-3.944 1.506 6.212 6.212 0 00-10.744 4.253c0 .486.056.958.16 1.414a17.638 17.638 0 01-12.802-6.49 6.208 6.208 0 00-.84 3.122 6.212 6.212 0 002.762 5.17 6.197 6.197 0 01-2.813-.777v.08c0 3.01 2.14 5.52 4.983 6.091a6.258 6.258 0 01-2.806.107 6.215 6.215 0 005.803 4.312 12.464 12.464 0 01-7.715 2.66c-.501 0-.996-.03-1.482-.087a17.566 17.566 0 009.52 2.79c11.426 0 17.673-9.463 17.673-17.671 0-.267-.007-.536-.019-.803a12.627 12.627 0 003.098-3.213l.002-.004z"></path></svg>
+```
+
+We'll add it to our code like this:
+
+```html
+<a class="ml-auto" href="https://twitter.com/giovannibenussi">
+  <div class="opacity-50 hover:opacity-75 text-white">
+    <!-- Twitter SVG -->
+  </div>
+</a>
+```
+
+<CardWithTwitter />
+
+[Try it online](https://play.tailwindcss.com/eerhjLqaFN).
+
+Lastly, we're gonna add a small animation. We'll rotate the card a bit and
+animate it so it's come back to its horizontal position when you put your mouse
+hover it.
+
+We'll add the following classes to the parent element:
+
+* `transform`: enables Tailwind's transformations.
+* `rotate-2`: rotates our parent element.
+* `duration-300`: sets the duration of our transition to 300ms.
+* `hover:rotate-0`: removes the rotation of our element on mouse hover.
+* `mt-2`i and `ml-2`: adds a bit of margin to the top and left side of the card
+  so it doesn't overlap another elements when it is rotated.
+
+With those few classes, we have added a nice animation to our card!
+
+<CardWithAnimation />
+
+[Try it online](https://play.tailwindcss.com/lrcA7EMowL).
+
+Here's how the final code looks like:
+
+```html
+<div class="transform rotate-2 duration-300 hover:rotate-0 mt-2 ml-2 w-[30rem] shadow-xl">
+  <div class="rounded-t-xl p-8 text-lg font-semibold">
+    <div class="fill-current text-yellow-500 mb-4 opacity-20">
+      <Quote />
+    </div>
+    Tailwind Rocks! 🤘
+  </div>
+  <div class="text-white rounded-b-xl p-4 bg-gradient-to-br from-yellow-500 to-pink-600 p-4 flex items-center gap-4 h-32">
+    <img
+      src={profileImage}
+      class="w-16 h-16 object-cover object-top rounded-full border-4 border-white mr-2"
+    />
+    <div>
+      <p>Giovanni Benussi</p>
+      <p>Software Developer</p>
+    </div>
+    <a class="ml-auto" href="https://twitter.com/giovannibenussi">
+      <Twitter class="opacity-50 hover:opacity-75 text-white" />
+    </a>
+  </div>
+</div>
+```
+
+# Conclusion
+Congrats! You reached the end of this article. I hope that you have learning
+something new along the way 😄 We applied a lot of Tailwind classes to
+replicate the testimonials card component from the Tailwind official website.
+
+As always, you can reach me out on
+[Twitter](https://twitter.com/giovannibenussi) if you have any question!

@@ -1,0 +1,5 @@
+.wrapper > p::before {
+  counter-increment: paragraph-counter;
+  font-weight: bold;
+  content: "- Paragraph " counter(paragraph-counter) ": ";
+}

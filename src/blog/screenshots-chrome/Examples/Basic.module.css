@@ -1,0 +1,8 @@
+.wrapper {
+  counter-reset: test;
+}
+
+.wrapper p {
+  counter-increment: test;
+  content: "Paragraph " counter(test) ": ";
+}

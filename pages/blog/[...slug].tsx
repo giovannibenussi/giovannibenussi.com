@@ -5,7 +5,20 @@ import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
 // @ts-ignore
 import remarkPrism from 'remark-prism'
+import remarkGFM from 'remark-gfm'
 import path from 'path'
+//@ts-ignore
+import { Chat } from 'components/Chat'
+//@ts-ignore
+import { InteractiveExample } from 'components/InteractiveExample'
+//@ts-ignore
+import OutsideVariableMultiple from 'src/blog/a-complete-guide-to-useref/Examples/OutsideVariable/multiple'
+//@ts-ignore
+import UseCallbackExample from 'src/blog/a-complete-guide-to-useref/Examples/UseCallbackExample'
+//@ts-ignore
+import UsePreviousExample from 'src/blog/a-complete-guide-to-useref/Examples/UsePreviousExample'
+//@ts-ignore
+import Warning from 'components/Warning'
 
 function removeSuffix(text: string, suffix: string): string {
   return text.endsWith(suffix) ? text.slice(0, -suffix.length) : text
@@ -45,11 +58,10 @@ export const getStaticProps: GetStaticProps<any, Params> = async (context) => {
   const articlesPath = path.join(process.cwd(), 'src/blog')
   const articleDir = path.join(articlesPath, `${slug}/index.mdx`)
 
-  //const source = fs.readFileSync(articleDir)
   const source = fs.readFileSync(articleDir)
   const mdxSource = await serialize(source.toString(), {
     mdxOptions: {
-      remarkPlugins: [remarkPrism],
+      remarkPlugins: [remarkPrism, remarkGFM],
     },
     parseFrontmatter: true,
   })
@@ -61,10 +73,19 @@ type BlogEntryProps = {
   mdxSource: any
 }
 
+const components = {
+  Chat,
+  InteractiveExample,
+  OutsideVariableMultiple,
+  UseCallbackExample,
+  UsePreviousExample,
+  Warning,
+}
+
 const BlogEntry: NextPage<BlogEntryProps> = ({ mdxSource }) => {
   return (
     <BlogPostLayout frontmatter={mdxSource.frontmatter}>
-      <MDXRemote {...mdxSource} />
+      <MDXRemote {...mdxSource} components={components} />
     </BlogPostLayout>
   )
 }

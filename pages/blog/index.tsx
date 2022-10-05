@@ -10,7 +10,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const fg = require('fast-glob')
   const fs = require('fs')
   const pages = await getAllMDXFiles(fg)
-  const posts: Array<PostDataType> = []
+  let posts: Array<PostDataType> = []
   for (const page of pages) {
     const data = fs.readFileSync(page.toString())
     const mdxSource = await serialize(data.toString(), {
@@ -28,12 +28,11 @@ export const getStaticProps: GetStaticProps = async () => {
       slug,
     })
   }
-  const sortedPosts = posts.sort((post1, post2) =>
-    post2?.date > post1?.date ? 1 : -1
-  )
+  posts = posts.filter((post) => !post?.draft)
+  posts = posts.sort((post1, post2) => (post2?.date > post1?.date ? 1 : -1))
 
   return {
-    props: { posts: sortedPosts },
+    props: { posts},
   }
 }
 
@@ -53,10 +52,10 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
       </Head>
 
       <Layout>
-        <div className="bg-gray-50">
+        <div className="dark:bg-gray-800">
           <div className="content">
             <ol
-              className="grid gap-4 p-8"
+              className="grid gap-4"
               style={{
                 gridTemplateColumns: 'repeat(auto-fit, minmax(18rem, 1fr))',
               }}
@@ -70,19 +69,6 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
           </div>
         </div>
       </Layout>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
     </div>
   )
 }

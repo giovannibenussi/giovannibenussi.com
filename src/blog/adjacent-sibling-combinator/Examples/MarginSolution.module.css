@@ -1,0 +1,7 @@
+.wrapper > button {
+  display: block;
+}
+
+.wrapper > button + button {
+  margin-top: 1rem;
+}

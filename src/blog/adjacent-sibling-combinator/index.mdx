@@ -1,0 +1,124 @@
+---
+title: Adjacent Sibling Combinator (+) in CSS
+date: "2021-04-28T20:00:00.000Z"
+description: "Learn about this powerful, not well known operator"
+featuredImage: ./featured-image.jpg
+draft: false
+---
+import FirstExample from './Examples/First'
+import MarginExample from './Examples/Margin'
+import MarginExampleSolution from './Examples/MarginSolution'
+import MarginGenericSolution from './Examples/MarginGenericSolution'
+import CanIUse from './../../components/CanIUse'
+
+If you've been into web development for a bit, you know how fast it has been
+evolving. CSS has gain a lot of features in the last years, allowing us to do
+things that weren't possible before without Javascript. The adjacent sibling
+combinator is k
+
+## What's the Adjacent Sibling Combinator?
+
+<CanIUse
+  name='Adjacent Sibling Combinator'
+  support='96.56%'
+  canIUseURL='https://caniuse.com/?search=adjacent%20sibling'
+  docURL='https://developer.mozilla.org/en-US/docs/Web/CSS/Adjacent_sibling_combinator'
+  w3cURL='https://drafts.csswg.org/selectors-3/#adjacent-sibling-combinators'
+/>
+
+[According to MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Adjacent_sibling_combinator):
+
+> The adjacent sibling combinator (+) separates two selectors and matches the second element only if it immediately follows the first element, and both are children of the same parent element.
+
+Let's see an example of this:
+
+```css
+button {
+  background-color: #3B82F6;
+}
+
+p + button {
+  background-color: #10B981;
+}
+```
+
+We are telling that if a button follows a paragraph, it should have a different
+background color.
+
+So, this markup:
+
+```jsx
+<button>First</button>
+<button>Second</button>
+<p>Paragraph content</p>
+<button>Third</button>
+<button>Fourth</button>
+```
+
+Will look like this:
+
+<FirstExample />
+
+As you can see, only the button that comes after the paragraph has a custom color.
+
+## Generalizing our Solution
+We can go a step further and apply a given style using the Adjacent sibling
+combinator without it being specific to a given type.
+
+Let's suppose we want to separate the following buttons between each other. We
+might write down the following CSS:
+
+```css
+button {
+  margin-top: 1rem;
+}
+```
+
+Here's how it will look:
+
+<MarginExample />
+
+As you can see there's extra margin above the first button.
+
+We can solve this by using the Adjacent sibling combinator:
+
+```css
+button + button {
+  margin-top: 1rem;
+}
+```
+
+<MarginExampleSolution />
+
+This solves our current problem, but what happens if we want to apply the same
+separation between elements for more than buttons? Or what if we want to apply
+margins between different types of elements?
+
+We can use the [CSS universal selector
+(*)](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors) that
+matches any element no matter its type to create a custom utility class to add
+separation between elements:
+
+
+```css
+.separate-4 > * + * {
+  margin-top: 1rem;
+}
+```
+
+<MarginGenericSolution />
+
+This selector is also known as the
+[lobotomized owl selector](https://alistapart.com/article/axiomatic-css-and-lobotomized-owls/).
+
+If needed, you can also combine different kind of selectors like `* + button`,
+`button + *`, `.myClass + *`, `.myID + .myClass`. This allows to be very
+flexible and match elements in such a way that wasn't possible in the past
+without using Javascript.
+
+## Conclusion
+The adjacent sibling combinator is a very useful, yet not so well known
+operator. It allows to create layouts without too much work and that is easy to
+generalize.
+
+You can [message me on Twitter](https://twitter.com/giovannibenussi) if you have any questions or want to talk about anything and I'll be happy to chat with out 😄

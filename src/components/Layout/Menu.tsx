@@ -27,23 +27,18 @@ function ToggleDarkModeButton() {
 export function Menu() {
   return (
     <div>
-      <div
-        className="w-full pt-6 pb-8 text-gray-800 content"
-        style={{
-          gridTemplateColumns: 'auto 1fr',
-        }}
-      >
-        <div className="flex flex-wrap items-center	justify-between gap-4 max-content-width m-auto pt-2 pb-4 px-8">
+      <div className="content w-full pt-8 pb-4 text-gray-800 sm:pt-6 sm:pb-8">
+        <div className="max-content-width m-auto grid	items-center justify-center gap-4 pt-2 pb-4 sm:grid-cols-2 sm:justify-between">
           <div className="m-0" style={{ minWidth: '5rem' }}>
             <div className="flex flex-wrap gap-4">
               <Link href="/">
-                <a className="text-3xl font-bold no-underline prose dark:prose-invert">
+                <a className="prose text-3xl font-bold text-indigo-500 no-underline dark:prose-invert">
                   Giovanni Benussi
                 </a>
               </Link>
             </div>
           </div>
-          <div className="not-prose text-xl flex gap-8 items-center text-gray-800 dark:text-white">
+          <div className="not-prose flex items-center justify-end gap-8 text-xl text-gray-800 dark:text-white">
             <MenuLink href="/">Home</MenuLink>
             <MenuLink href="/blog">Blog</MenuLink>
             <MenuLink href="/about">About</MenuLink>

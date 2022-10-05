@@ -1,0 +1,69 @@
+---
+title: "Edge API Routes on Next.js"
+date: "2022-08-06T07:09:05.000Z"
+description: "Build high performance APIs with three lines of code"
+featuredImage: ./featured-image.jpg
+featuredImageUnsplashAuthor: NASA
+featuredImageUnsplashURL: https://unsplash.com/@nasa?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+featuredImageUnsplashURLLink: https://unsplash.com/@nasa?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+featuredImageUnsplashAltText: Photo of north america at night. Lots of street lights are visible.
+draft: false
+hot: true
+---
+
+Having a switchable Next.js runtime [has been in the works for a while](https://github.com/vercel/next.js/discussions/34179#discussioncomment-3270134) and [it's finally here](https://nextjs.org/docs/api-routes/edge-api-routes) to test it out! The API is simple and the performance improvements are great 🚀.
+
+## Set Edge Runtime For an API Route
+
+To set the Edge Runtime on a per-file basis, you need to add a named export called `config` with the `runtime: 'experimental-edge'` option:
+
+```js
+export const config = {
+  runtime: 'experimental-edge',
+}
+
+export default function handler(req) {
+  return new Response('Hi from the edge!')
+}
+```
+
+_Note: This feature is still experimental, that's why it's called `experimental-edge`. It it will probably change it's name in the future._
+
+## Constraints
+
+Workers support many of the standard APIs available in modern browsers. Node.js APIs are not supported, which means that you won't have access to Node.js classes and methods that are used to. This in turn means that some libraries don't work on workers as they are in this moment (a lot of libraries have been updated to be run on the edge).
+
+The edge runtime support standard web APIs and [doesn't support native Node.js APIs](https://nextjs.org/docs/api-reference/edge-runtime#unsupported-apis). This means that we need to be aware of the _[constraints](https://nextjs.org/docs/api-reference/edge-runtime#unsupported-apis)_ of this environment. Don't worry, you'll rarely find issues writing your API routes!
+
+The constraints mentioned above also means that some libraries may not work on the edge out of the box. This is something that library authors need to fix when possible. I won't worry that much about this since a lot of libraries are migrating to using stardard APIs to support edge environments like [Vercel Edge Functions](https://vercel.com/docs/concepts/functions/edge-functions) and [Cloudflare Workers](https://workers.cloudflare.com/).
+
+## Formatting Responses
+
+To format responses we need to use standard ways to do so. For example, to format a JSON response, we could use `JSON.stringify`:
+
+```js
+export default async function handler(req) {
+  const data = { name: 'Giovanni Benussi' }
+
+  return new Response(
+    JSON.stringify(data, null, 2),
+    {
+      headers: {
+        'content-type': 'application/json;charset=UTF-8',
+      }
+    }
+  )
+}
+```
+
+## Retrieve Current Runtime
+
+You can retrieve the current runtime with the `process.env.NEXT_RUNTIME` environment variable:
+
+```js
+console.log("Runtime:", process.env.NEXT_RUNTIME)
+```
+
+## Conclusion
+
+Edge computing has come here to stay. The performance benefits are noticeable and the community is working actively to improve the implementation of [standarized web APIs in environments different than web browsers](https://blog.cloudflare.com/introducing-the-wintercg/). Next.js offers an easy way to start using the Edge Runtime so you can get the benefits of edge computing with a few changes to your applications.

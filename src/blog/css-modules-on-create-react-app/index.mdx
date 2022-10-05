@@ -1,0 +1,133 @@
+---
+title: Using CSS Modules in create-react-app
+date: "2020-12-04T22:00:00.000Z"
+description: "Learn how to use CSS Modules in create-react-app"
+featuredImage: ./css-modules-cra.png
+---
+
+![CSS Modules in create-react-app](./css-modules-cra.png)
+[CSS Modules](https://github.com/css-modules/css-modules) are great when building components because it allows you to create
+locally scoped class names so you don't need to worry about naming conflicts. This is the
+definition that
+[the official CSS Modules repository](https://github.com/css-modules/css-modules) provides:
+
+> A CSS Module is a CSS file in which all class names and animation names are scoped locally by default.
+
+I'm not going to dig on the specific features of CSS Modules (maybe more of that
+on another post!), but instead talk about how to use it on
+[create-react-app](https://create-react-app.dev/).
+
+Let's add a new component called *Button.js*:
+
+```js
+// Button.js
+
+import React from "react"
+
+function Button() {
+  return <button>Click me!</button>
+}
+
+export default Button
+```
+
+Now, create a file named *styles.module.css*:
+
+```css
+/* styles.module.css */
+
+.myButton {
+  font-size: 1.5rem;
+}
+```
+
+**Note: it's important that your style file ends with the .module.css extension.
+Otherwise, it's not going to be detected as a CSS module.**
+
+To use our new styles we need to import out CSS Module file like this:
+
+```js
+// Button.js
+import styles from './styles.module.css'
+```
+
+The `styles` variable is a simple object with a key for each class specified in
+the CSS Module file:
+
+```json
+{
+  myButton: "styles_myButton__3wuuo"
+}
+```
+
+As you can see, our `myButton` class maps to a pseudo-random string
+`"styles_myButton__3wuuo"`. This is cool because now we could do this:
+
+```jsx
+<button className={styles.myButton}>Click me!</button>
+```
+
+And it will be converted into this:
+
+```jsx
+<button className='styles_myButton__3wuuo'>Click me!</button>
+```
+
+*Note: `className` is used as the classic `class` attribute in plain HTML to
+provide custom classes to elements.*
+
+And that's it! It was easier than expected, wasn't it?
+
+The process is as follows:
+
+* Add a `.module.css` file
+* Import the newly created file in your component
+* Add a `className` attribute to your elements to reference some of the class
+  names inside your CSS Module file.
+
+As a last thing, the name `style.module.css` is not mandatory. You can use any
+name as long as it ends with `.module.css`:
+
+```jsx
+// Button.js
+import CustomName from './custom-name.module.css'
+
+function Button() {
+  return (
+    <button className={CustomName.myButton}>
+      Click me!
+    </button>
+  )
+}
+```
+
+## Importing multiple classes
+If you need to use multiple classes on an element, you can simply join their
+class names:
+
+```jsx
+<button className={`${styles.myButton} ${styles.anotherClass}`}>
+  Click me!
+</button>
+```
+
+You can also use a library like
+[classnames](https://github.com/JedWatson/classnames) or
+[clsx](https://github.com/lukeed/clsx):
+
+```jsx
+import clsx from 'clsx';
+
+<button className={clsx(styles.myButton, styles.anotherClass)}>
+  Click me!
+</button>
+```
+
+# Last Words
+As you were able to see, CSS Modules are very useful to style in an isolated way
+our components on React. You have all the benefits of CSS without name
+conflicts.
+
+If you have any question or comments, you can [ping me on
+Twitter](https://twitter.com/giovannibenussi) or send me an email at
+[giovanni.benussi@usach.cl](mailto:giovanni.benussi@usach.cl).

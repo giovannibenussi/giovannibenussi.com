@@ -1,0 +1,14 @@
+.wrapper > p {
+  margin: 0.5rem 0 !important;
+}
+
+.wrapper > button {
+  background-color: #3b82f6;
+  color: white;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.wrapper > p + button {
+  background-color: #10b981;
+}

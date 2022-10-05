@@ -1,0 +1,102 @@
+---
+title: "Git Stash Tips"
+date: "2022-08-03T07:15:00.000Z"
+description: "A personal list of tips for git stash command"
+featuredImage: ./featured-image.jpg
+featuredImageUnsplashAuthor: Fernando Lavin
+featuredImageUnsplashURL: https://unsplash.com/@filmlav?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+featuredImageUnsplashURLLink: https://unsplash.com/s/photos/floppy-disk?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+featuredImageUnsplashAltText: A floppy disk in a grey background
+draft: false
+---
+
+## Show Stash Diff
+
+To see the difference between the current code and some stash's entry, you can run the following:
+
+```bash
+git stash show -p
+```
+
+You can specify a stash index too:
+
+```bash
+// git stash list
+stash@{0}: First entry
+stash@{1}: Second entry
+stash@{2}: Third entry
+stash@{3}: Fourth entry
+stash@{4}: Fifth entry
+
+git stash show -p 1 // Shows diff for stash@{1} // Second entry
+```
+
+## git stash push
+
+You can run this command to save code into the stash with a specific message so
+it's easier to differentiate multiple stash entries later (and even apply a
+specific one by using [`git stash apply`](#git-stash-apply)):
+
+```bash
+git stash push -m "Custom Message"
+```
+
+_Note: `git stash save "Custom Message"` [is deprecated](https://git-scm.com/docs/git-stash#Documentation/git-stash.txt-push-p--patch-S--staged-k--no-keep-index-u--include-untracked-a--all-q--quiet-m--messageltmessagegt--pathspec-from-fileltfilegt--pathspec-file-nul--ltpathspecgt82308203), so I'd suggest to stick with `git stash push`._
+
+## git stash apply
+
+Let's suppose that you have the following entries in the stash:
+
+```bash
+// git stash list
+stash@{0}: First entry
+stash@{1}: Second entry
+stash@{2}: Third entry
+stash@{3}: Fourth entry
+stash@{4}: Fifth entry
+```
+
+You can run `git stash apply` with the index of the stash list as a parameter (starting with 0) to apply the entry "Third entry" from the stash:
+
+```bash
+git stash apply 2
+```
+
+This means that `git stash pop` is equivalent to `git stash apply 0`.
+
+## Apply a Stash Without Removing it From the List
+
+If you may want to apply some changes but keep them in the stash, you can run
+the following:
+
+```bash
+git stash apply
+```
+
+According to [`git`](https://git-scm.com/docs/git-stash#Documentation/git-stash.txt-apply--index-q--quietltstashgt) docs:
+
+> Like pop, but do not remove the state from the stash list
+
+## Disable Pagination for git stash list
+
+There's [an issue](https://stackoverflow.com/a/4226181/2043736) that prevents to add a global configuration to disable pagination for `git stash list`, so you can only do this on a per command basis:
+
+```bash
+git --no-pager stash list
+```
+
+This maybe be a bit cumbersome to repeat, so you can always create an alias for git stash list as I did:
+
+```
+alias gstl='git --no-pager stash list'
+```
+
+Now you can run `gstl` to list your stash entries.
+
+## Stash a Specific File
+
+If you want to stash a specific file(s), you can append them on the `git stash -m message` syntax:
+
+```bash
+git stash push -m "Custom Message" index.js package.json yarn.lock
+```

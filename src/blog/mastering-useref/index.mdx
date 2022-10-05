@@ -1,0 +1,56 @@
+---
+title: "Mastering useRef"
+date: "2022-09-07T07:09:05.000Z"
+description: "Went from good to great by building a mental model to master the useRef hook"
+featuredImage: ./featured-image.jpg
+featuredImageUnsplashAuthor: Mildlee
+featuredImageUnsplashURL: https://unsplash.com/@mildlee?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+featuredImageUnsplashURLLink: https://unsplash.com/s/photos/box?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+
+draft: true
+---
+import InteractiveExample from '../InteractiveExample'
+import { UserefVsVariable } from './examples/UserefVsVariable'
+
+We have a lot of useful hooks when working with React applications. Master each one of them is crucial to do the best work possible with our time. This article covers all the knowledge you need to master the `useRef` hook.
+
+## Definition
+
+`useRef` stores a variable that doesn't trigger a re-render when updated.
+
+You want to use `useRef` when:
+  * [Storing data that is not needed during rendering](https://beta.reactjs.org/apis/react/useRef).
+  * Manipulate a DOM node.
+
+That's is. If your use case match this criteria, go ahead with `useRef`. Don't do it otherwise.
+
+## useRef vs useState
+
+Both `useRef` and `useState` stores a variable. However, they differ in that `useRef` doesn't trigger a re-render when the variable is updated. You can test the following behavior below:
+
+> Example here...
+
+## useRef vs a Variable
+
+You may have noticed that `useRef` behaves similar to a variable like the one defined below:
+
+```js
+const clicksVariable = 0
+
+function MyComponent() {
+  const clicksRef = useRef(0)
+
+  return <>
+    <button onClick={() => clicksVariable += 1}>Click me</button>
+    <button onClick={() => clicksRef.current += 1}>Click me</button>
+  </>
+}
+```
+
+Both `clicksVariable` and `clicksRef.current` have the same value. However, `clicksVariable` behaves like a global variable, so multiple instances of it will interfere with each otherwise
+
+> Example here...
+
+<InteractiveExample>
+  <UserefVsVariable variable={1} />
+</InteractiveExample>

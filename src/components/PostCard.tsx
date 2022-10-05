@@ -31,24 +31,25 @@ export function PostCard({
           <article
             itemScope
             itemType="http://schema.org/Article"
-            className="h-full flex flex-col border border-gray-100 shadow-md rounded-xl overflow-hidden hover:shadow-2xl"
+            className="prose flex h-full flex-col overflow-hidden rounded-xl border border-gray-100 shadow-md hover:shadow-2xl dark:prose-invert dark:border-gray-900 dark:bg-gray-900"
             style={{
               gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
             }}
           >
             <Image
-              height={15 * 16}
-              width={15 * 16}
+              height={250}
+              width={350}
               alt=""
               src={`/images/blog/${post.slug}.jpg`}
+              objectFit='cover'
               style={{
                 objectFit: 'cover',
                 height: '15rem',
               }}
             />
-            <section className="px-4 py-4 flex flex-col flex-grow hover:text-blue-500 text-black">
-              <div className="h-full flex flex-col justify-between">
-                <h2 className="font-bold text-xl">
+            <section className="flex flex-grow flex-col px-4 py-4 hover:text-blue-500 ">
+              <div>
+                <h2 className="mt-0 mb-2 text-xl font-bold">
                   <span itemProp="headline">{post.title}</span>
                 </h2>
                 <p
@@ -56,11 +57,11 @@ export function PostCard({
                     __html: post.description,
                   }}
                   itemProp="description"
-                  className="text-gray-500 mb-4"
+                  className="mb-4"
                 />
               </div>
-              <div className="flex mt-auto justify-between items-center">
-                <div className="flex items-center text-gray-500">
+              <div className="mt-auto flex items-center justify-between">
+                <div className="flex items-center">
                   <TimeIcon />
                   &nbsp;
                   <small>{formatDate(post.date)}</small>

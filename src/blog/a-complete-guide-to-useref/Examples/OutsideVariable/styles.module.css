@@ -1,0 +1,21 @@
+.wrapper {
+  font-family: sans-serif;
+  text-align: center;
+
+  display: grid;
+  grid-template-columns: 10rem;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.namedGrid {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 10rem;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.twoColumns {
+  grid-template-columns: auto 10rem;
+}

@@ -1,0 +1,8 @@
+.animated {
+  transform: rotate(2deg);
+  transition: transform 0.25s;
+}
+
+.animated:hover {
+  transform: rotate(0);
+}

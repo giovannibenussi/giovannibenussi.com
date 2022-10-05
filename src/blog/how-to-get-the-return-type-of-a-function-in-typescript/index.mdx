@@ -13,7 +13,7 @@ TypeScript [provides some handy methods](https://www.typescriptlang.org/docs/han
 
 Continue reading to learn how to use the `ReturnType` function.
 
-# TLDR
+## TLDR
 
 Use the `ReturnType` utility:
 
@@ -27,7 +27,7 @@ type SayHiReturnType = ReturnType<typeof sayHi> // string
 ```
 
 
-# Get the Return Type of a Function in Typescript
+## Get the Return Type of a Function in Typescript
 
 Let's start with a simple function that returns a string:
 
@@ -47,7 +47,7 @@ type SayHiReturnType = ReturnType<typeof sayHi>
 
 `SayHiReturnType` value will be the `string` type.
 
-# Get the Return Type of an Async Function in Typescript
+## Get the Return Type of an Async Function in Typescript
 
 We need to update our code a bit to work with promises.
 
@@ -70,7 +70,7 @@ type SayHiReturnType = Awaited<ReturnType<typeof sayHi>>;
 
 Now `SayHiReturnType` has a value of `string`.
 
-# Conclusion
+## Conclusion
 
 TypeScript has powerful yet simple utility functions like `ReturnType` that we can use to build resilient applications.
 
