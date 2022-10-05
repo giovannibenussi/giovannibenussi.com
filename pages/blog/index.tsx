@@ -32,7 +32,7 @@ export const getStaticProps: GetStaticProps = async () => {
   posts = posts.sort((post1, post2) => (post2?.date > post1?.date ? 1 : -1))
 
   return {
-    props: { posts},
+    props: { posts },
   }
 }
 
@@ -53,7 +53,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
 
       <Layout>
         <div className="dark:bg-gray-800">
-          <div className="content">
+          <div className="content py-8">
             <ol
               className="grid gap-4"
               style={{

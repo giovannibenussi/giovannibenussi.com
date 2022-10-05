@@ -24,7 +24,7 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className={colorMode}>
-      <Menu />
+        <Menu />
       {children}
       <footer className="content mt-8 border-t border-gray-200 py-8">
         <div className="content prose grid grid-cols-2 dark:prose-invert">

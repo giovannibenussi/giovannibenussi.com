@@ -26,7 +26,6 @@ function ToggleDarkModeButton() {
 
 export function Menu() {
   return (
-    <div>
       <div className="content w-full pt-8 pb-4 text-gray-800 sm:pt-6 sm:pb-8">
         <div className="max-content-width m-auto grid	items-center justify-center gap-4 pt-2 pb-4 sm:grid-cols-2 sm:justify-between">
           <div className="m-0" style={{ minWidth: '5rem' }}>
@@ -46,6 +45,5 @@ export function Menu() {
           </div>
         </div>
       </div>
-    </div>
   )
 }

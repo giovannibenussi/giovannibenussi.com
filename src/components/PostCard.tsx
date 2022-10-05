@@ -41,15 +41,15 @@ export function PostCard({
               width={350}
               alt=""
               src={`/images/blog/${post.slug}.jpg`}
-              objectFit='cover'
+              objectFit="cover"
               style={{
                 objectFit: 'cover',
                 height: '15rem',
               }}
             />
-            <section className="flex flex-grow flex-col px-4 py-4 hover:text-blue-500 ">
+            <section className="flex flex-grow flex-col px-4 py-4">
               <div>
-                <h2 className="mt-0 mb-2 text-xl font-bold">
+                <h2 className="mt-0 mb-2 text-xl font-bold hover:text-blue-500">
                   <span itemProp="headline">{post.title}</span>
                 </h2>
                 <p
