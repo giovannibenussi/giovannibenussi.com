@@ -12,7 +12,7 @@ export type PostDataType = {
   featuredImage: string
   hot?: boolean
   image: string | null
-  path?: string
+  path: string
   slug?: string
   title: string
 }

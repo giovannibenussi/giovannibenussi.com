@@ -7,14 +7,13 @@ const metaData: PostDataType = {
   date: '2022-09-07T07:09:05.000Z',
   featuredImage: 'test',
   image: 'test',
+  path:''
 }
 
 export default function CustomPageTest() {
   return (
     <BlogPostLayout frontmatter={metaData}>
-      <p>
-      This is the beginning of my post
-      </p>
+      <p>This is the beginning of my post</p>
     </BlogPostLayout>
   )
 }
