@@ -12,8 +12,8 @@ export type PostDataType = {
   featuredImage: string
   hot?: boolean
   image: string | null
-  path: string
-  slug: string
+  path?: string
+  slug?: string
   title: string
 }
 
@@ -49,9 +49,9 @@ export function PostCard({
             />
             <section className="flex flex-grow flex-col px-4 py-4">
               <div>
-                <h2 className="mt-0 mb-2 text-xl font-bold hover:text-blue-500">
+                <h1 className="mt-0 mb-2 text-xl font-bold hover:text-blue-500">
                   <span itemProp="headline">{post.title}</span>
-                </h2>
+                </h1>
                 <p
                   dangerouslySetInnerHTML={{
                     __html: post.description,

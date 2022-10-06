@@ -18,7 +18,22 @@ import UseCallbackExample from 'src/blog/a-complete-guide-to-useref/Examples/Use
 //@ts-ignore
 import UsePreviousExample from 'src/blog/a-complete-guide-to-useref/Examples/UsePreviousExample'
 //@ts-ignore
+import Base from 'src/blog/polyfill-flex-gap/Base'
+//@ts-ignore
+import BorderExample from 'src/blog/polyfill-flex-gap/BorderExample'
+//@ts-ignore
+import CSSVariablesExample from 'src/blog/polyfill-flex-gap/CSSVariablesExample'
+//@ts-ignore
+import GapExample from 'src/blog/polyfill-flex-gap/GapExample'
+//@ts-ignore
+import MarginExampleWorking from 'src/blog/polyfill-flex-gap/MarginExampleWorking'
+//@ts-ignore
+import NestingExample from 'src/blog/polyfill-flex-gap/NestingExample'
+//@ts-ignore
+import SpaceBetweenItemsExample from 'src/blog/polyfill-flex-gap/SpaceBetweenItemsExample'
+//@ts-ignore
 import Warning from 'components/Warning'
+import CanIUse from 'components/CanIUse'
 
 function removeSuffix(text: string, suffix: string): string {
   return text.endsWith(suffix) ? text.slice(0, -suffix.length) : text
@@ -79,7 +94,15 @@ const components = {
   OutsideVariableMultiple,
   UseCallbackExample,
   UsePreviousExample,
+  Base,
+  BorderExample,
+  CSSVariablesExample,
+  GapExample,
+  MarginExampleWorking,
+  NestingExample,
+  SpaceBetweenItemsExample,
   Warning,
+  CanIUse,
 }
 
 const BlogEntry: NextPage<BlogEntryProps> = ({ mdxSource }) => {

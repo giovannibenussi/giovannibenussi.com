@@ -28,3 +28,20 @@ body {
   padding-left: var(--content-padding);
   padding-right: var(--content-padding);
 }
+
+a.link-green {
+  @apply text-green-500;
+}
+
+a.link-green:hover {
+  @apply text-green-400;
+}
+
+a.link-blue {
+  @apply text-blue-500;
+}
+
+a.link-blue:hover {
+  @apply text-blue-400;
+}
+

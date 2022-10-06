@@ -1,7 +1,7 @@
 import Head from 'next/head'
 
 type SEOProps = {
-  description:string
+  description: string
   title: string
 }
 

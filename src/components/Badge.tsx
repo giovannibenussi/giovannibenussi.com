@@ -1,5 +1,5 @@
-import { PostDataType } from '../PostCard'
 import c from 'classnames'
+import {PostDataType} from './PostCard'
 
 function Wrapper({
   className,

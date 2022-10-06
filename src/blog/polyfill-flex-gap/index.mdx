@@ -5,17 +5,9 @@ description: "When and how to polyfill the gap property on flexbox"
 featuredImage: ./featured-image.jpg
 draft: false
 ---
-import Base from './Base'
-import SpaceBetweenItemsExample from './SpaceBetweenItemsExample'
-import MarginExample from './MarginExample'
-import MarginExampleWorking from './MarginExampleWorking'
-import NestingExample from './NestingExample'
-import BorderExample from './BorderExample'
-import CanIUse from './../../components/CanIUse'
-import CSSVariablesExample from './CSSVariablesExample'
-import GapExample from './GapExample'
-
 [gap](https://developer.mozilla.org/en-US/docs/Web/CSS/gap) is a very useful CSS property that allows to set separation or glutter between children elements in a layout.
+
+hello `world`.
 
 ```css
 .container {
@@ -106,9 +98,6 @@ Here's how it looks:
 
 It doesn't work because when items span more than one column, from the second item on, there's extra margin to the left. This is because we're applying margin to every children that follows another children.
 You can read more about the Adjacent Sibling Combinator [here](/blog/adjacent-sibling-combinator/).
-
-
-<MarginExample />
 
 To fix the issue with the extra margin at the left and top, we can add negative margins to the parent like this:
 
