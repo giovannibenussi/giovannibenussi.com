@@ -8,15 +8,7 @@ const withMDX = require('@next/mdx')({
 
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
-  async rewrites() {
-    return [
-      {
-        source: '/',
-        destination: '/blog',
-      },
-    ]
-  },
+  swcMinify: true
 }
 
 module.exports = withMDX({
