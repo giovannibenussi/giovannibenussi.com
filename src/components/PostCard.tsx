@@ -3,13 +3,15 @@ import Image from 'next/image'
 import { TimeIcon } from '@chakra-ui/icons'
 import { formatDate } from 'lib/util'
 import { Badge } from 'components/Badge'
+import { IGetPlaiceholderReturn } from 'plaiceholder'
 
 export type PostDataType = {
   bestOf?: boolean
   draft?: boolean
   date: string
   description: string
-  featuredImage: string
+  imageBase64: string | undefined
+  img: null | IGetPlaiceholderReturn['img']
   hot?: boolean
   image: string | null
   path: string
@@ -36,17 +38,21 @@ export function PostCard({
               gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
             }}
           >
-            <Image
-              height={250}
-              width={350}
-              alt=""
-              src={`/images/blog/${post.slug}.jpg`}
-              objectFit="cover"
-              style={{
-                objectFit: 'cover',
-                height: '15rem',
-              }}
-            />
+            {post.img && (
+              <Image
+                height={250}
+                width={350}
+                alt=""
+                src={post.img.src}
+                placeholder="blur"
+                blurDataURL={post.imageBase64}
+                objectFit="cover"
+                style={{
+                  objectFit: 'cover',
+                  height: '15rem',
+                }}
+              />
+            )}
             <section className="flex flex-grow flex-col px-4 py-4">
               <div>
                 <h1 className="mt-0 mb-2 text-xl font-bold hover:text-blue-500">

@@ -4,6 +4,7 @@ import { PostCard, PostDataType } from 'components/PostCard'
 import { getAllMDXFiles, pageSlug } from './blog/[...slug]'
 import { serialize } from 'next-mdx-remote/serialize'
 import { SEO } from 'components/SEO'
+import { getPlaiceholder } from 'plaiceholder'
 
 export const getStaticProps: GetStaticProps = async () => {
   const fg = require('fast-glob')
@@ -16,14 +17,16 @@ export const getStaticProps: GetStaticProps = async () => {
       parseFrontmatter: true,
     })
     const { frontmatter } = mdxSource
-
     const slug = pageSlug(page)
+    const imageSRC = `/images/blog/${slug}.jpg`
+    const { base64, img } = await getPlaiceholder(imageSRC, { size: 10 })
 
     // @ts-ignore
     posts.push({
       ...frontmatter,
       path: `/blog/${pageSlug(page)}`,
-      image: frontmatter?.featuredImage || null, // Can't be undefined
+      img, // Can't be undefined
+      imageBase64: base64 === null ? undefined : base64,
       slug,
     })
   }
