@@ -6,7 +6,7 @@ import { serialize } from 'next-mdx-remote/serialize'
 import { SEO } from 'components/SEO'
 import { getPlaiceholder } from 'plaiceholder'
 
-export const slugToImageSRC=(slug:string)=>`/images/blog/${slug}.jpg`
+export const slugToImageSRC = (slug: string) => `/images/blog/${slug}.jpg`
 
 export const getStaticProps: GetStaticProps = async () => {
   const fg = require('fast-glob')
@@ -52,7 +52,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
       <SEO
         title="All posts"
         description="Giovanni Benussi Blog"
-        image={undefined}
+        image={null}
       />
 
       <Layout>
