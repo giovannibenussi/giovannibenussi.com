@@ -56,6 +56,7 @@ import InlineStyle from 'src/blog/inline-css-variables/Examples/InlineStyle'
 //@ts-ignore
 import Warning from 'components/Warning'
 import CanIUse from 'components/CanIUse'
+import { slugToImageSRC } from '.'
 
 function removeSuffix(text: string, suffix: string): string {
   return text.endsWith(suffix) ? text.slice(0, -suffix.length) : text
@@ -91,7 +92,7 @@ type Params = {
 
 export const getStaticProps: GetStaticProps<any, Params> = async (context) => {
   const fs = require('fs')
-  const { slug } = context.params || {}
+  const { slug } = context.params || { slug: '' }
   const articlesPath = path.join(process.cwd(), 'src/blog')
   const articleDir = path.join(articlesPath, `${slug}/index.mdx`)
 
@@ -102,8 +103,12 @@ export const getStaticProps: GetStaticProps<any, Params> = async (context) => {
     },
     parseFrontmatter: true,
   })
+  const imageSRC = slugToImageSRC(slug)
+  if (mdxSource.frontmatter) {
+    mdxSource.frontmatter.image = imageSRC
+  }
 
-  return { props: { mdxSource } }
+  return { props: { mdxSource, imageSRC } }
 }
 
 type BlogEntryProps = {

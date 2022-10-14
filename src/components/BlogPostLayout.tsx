@@ -8,9 +8,14 @@ type BlogPostLayoutType = {
 }
 
 export function BlogPostLayout({ frontmatter, children }: BlogPostLayoutType) {
+  console.log('frontmatter:', frontmatter)
   return (
     <Layout>
-      <SEO title={frontmatter.title} description={frontmatter.description} />
+      <SEO
+        title={frontmatter.title}
+        description={frontmatter.description}
+        image={frontmatter.image}
+      />
 
       <div
         className="content-padding prose m-auto dark:prose-invert"

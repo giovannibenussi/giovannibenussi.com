@@ -6,6 +6,8 @@ import { serialize } from 'next-mdx-remote/serialize'
 import { SEO } from 'components/SEO'
 import { getPlaiceholder } from 'plaiceholder'
 
+export const slugToImageSRC=(slug:string)=>`/images/blog/${slug}.jpg`
+
 export const getStaticProps: GetStaticProps = async () => {
   const fg = require('fast-glob')
   const fs = require('fs')
@@ -18,7 +20,7 @@ export const getStaticProps: GetStaticProps = async () => {
     })
     const { frontmatter } = mdxSource
     const slug = pageSlug(page)
-    const imageSRC = `/images/blog/${slug}.jpg`
+    const imageSRC = slugToImageSRC(slug)
     const { base64, img } = await getPlaiceholder(imageSRC, { size: 10 })
 
     // @ts-ignore
@@ -47,7 +49,11 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
 
   return (
     <div>
-      <SEO title="All posts" description="Giovanni Benussi Blog" />
+      <SEO
+        title="All posts"
+        description="Giovanni Benussi Blog"
+        image={undefined}
+      />
 
       <Layout>
         <div className="dark:bg-gray-800">
