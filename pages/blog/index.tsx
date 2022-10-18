@@ -49,11 +49,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
 
   return (
     <div>
-      <SEO
-        title="All posts"
-        description="Giovanni Benussi Blog"
-        image={null}
-      />
+      <SEO title="All posts" description="Giovanni Benussi Blog" image={null} />
 
       <Layout>
         <div className="dark:bg-gray-800">

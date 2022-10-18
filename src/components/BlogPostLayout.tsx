@@ -1,6 +1,7 @@
 import { Layout } from './Layout'
 import { PostDataType } from './PostCard'
 import { SEO } from 'components/SEO'
+import { baseURL } from 'src/config'
 
 type BlogPostLayoutType = {
   children: React.ReactNode
@@ -8,17 +9,16 @@ type BlogPostLayoutType = {
 }
 
 export function BlogPostLayout({ frontmatter, children }: BlogPostLayoutType) {
-  console.log('frontmatter:', frontmatter)
   return (
     <Layout>
       <SEO
         title={frontmatter.title}
         description={frontmatter.description}
-        image={frontmatter.image}
+        image={baseURL + frontmatter.image}
       />
 
       <div
-        className="content-padding prose m-auto dark:prose-invert"
+        className="content-padding prose m-auto pb-14 dark:prose-invert"
         style={{ maxWidth: '55rem' }}
       >
         <h1>{frontmatter.title}</h1>
