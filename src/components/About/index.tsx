@@ -12,6 +12,7 @@ export function About() {
         title="About"
         description="About Giovanni Benussi"
         image={baseURL + avatar.src}
+        canonicalURL={baseURL + '/about'}
       />
       <div className="content prose grid grid-cols-[1fr] gap-4 dark:prose-invert md:grid-cols-[1fr_2fr]">
         <Profile />

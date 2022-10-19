@@ -4,6 +4,7 @@ type SEOProps = {
   description: string
   title: string
   image: string | null
+  canonicalURL: string | undefined
 }
 
 export function SEO(props: SEOProps) {
@@ -24,6 +25,7 @@ export function SEO(props: SEOProps) {
       />
       <meta name="twitter:title" content={props.title} />
       <meta name="twitter:description" content={props.description} />
+      <link rel="canonical" href={props.canonicalURL ||''} />
     </Head>
   )
 }

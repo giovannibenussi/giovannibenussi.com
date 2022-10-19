@@ -15,6 +15,7 @@ export function BlogPostLayout({ frontmatter, children }: BlogPostLayoutType) {
         title={frontmatter.title}
         description={frontmatter.description}
         image={baseURL + frontmatter.image}
+        canonicalURL={frontmatter.canonicalURL}
       />
 
       <div

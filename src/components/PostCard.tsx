@@ -7,6 +7,7 @@ import { IGetPlaiceholderReturn } from 'plaiceholder'
 
 export type PostDataType = {
   bestOf?: boolean
+  canonicalURL?: string
   draft?: boolean
   date: string
   description: string

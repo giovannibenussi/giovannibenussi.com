@@ -5,6 +5,7 @@ import { getAllMDXFiles, pageSlug } from './blog/[...slug]'
 import { serialize } from 'next-mdx-remote/serialize'
 import { SEO } from 'components/SEO'
 import { getPlaiceholder } from 'plaiceholder'
+import { baseURL } from 'src/config'
 
 export const slugToImageSRC = (slug: string) => `/images/blog/${slug}.jpg`
 
@@ -49,7 +50,12 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
 
   return (
     <div>
-      <SEO title="All posts" description="Giovanni Benussi Blog" image={null} />
+      <SEO
+        title="All posts"
+        description="Giovanni Benussi Blog"
+        image={null}
+        canonicalURL={baseURL + '/'}
+      />
 
       <Layout>
         <div className="dark:bg-gray-800">
