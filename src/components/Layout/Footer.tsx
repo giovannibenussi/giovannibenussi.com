@@ -3,13 +3,11 @@ import Link from 'next/link'
 
 function A({ href, children }: { children: React.ReactNode; href: string }) {
   return (
-    <Link href={href}>
-      <a
+    <Link href={href}
         className="text-gray-500 no-underline hover:text-indigo-500"
         target={href.startsWith('http') ? '_blank' : '_self'}
-      >
+    >
         {children}
-      </a>
     </Link>
   )
 }

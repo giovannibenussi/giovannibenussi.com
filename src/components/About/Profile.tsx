@@ -7,7 +7,6 @@ export function Profile() {
       <div className="w-48 h-48">
         <Image
           className="rounded-full"
-          layout="intrinsic"
           src={avatar}
           alt="Giovanni Benussi's Avatar"
         />

@@ -30,10 +30,11 @@ export function Menu() {
       <div className="max-content-width m-auto grid	items-center justify-center gap-4 pt-2 pb-4 sm:grid-cols-2 sm:justify-between">
         <div className="m-0" style={{ minWidth: '5rem' }}>
           <div className="flex flex-wrap gap-4">
-            <Link href="/">
-              <a className="prose text-3xl font-bold text-indigo-500 no-underline dark:prose-invert">
-                Giovanni Benussi
-              </a>
+            <Link
+              href="/"
+              className="prose text-3xl font-bold text-indigo-500 no-underline dark:prose-invert"
+            >
+              Giovanni Benussi
             </Link>
           </div>
         </div>
