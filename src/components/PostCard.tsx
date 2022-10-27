@@ -49,6 +49,7 @@ export function PostCard({
               style={{
                 objectFit: 'cover',
                 height: '15rem',
+                width: '100%',
               }}
             />
           )}
