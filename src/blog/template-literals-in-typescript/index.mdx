@@ -1,0 +1,70 @@
+---
+title: "Template Literals in TypeScript"
+date: "2022-11-11T09:40:00.000Z"
+description: "Write dynamic TypeScript types using template literals"
+featuredImage: ./featured-image.jpg
+draft: false
+---
+
+## Template Literals
+
+[TypeScript's template literal types](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#inference-with-template-literals) allows us to do define a template about how our strings should look like:
+
+```ts
+type EmailNameType = 'welcome' | 'subscribe' | 'marketing'
+
+// 'welcome_email' | 'subscribe_email' | 'marketing_email'
+type EmailTypes = `${EmailNameType}_email`
+```
+
+You can even include [union types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types) inside your template literals:
+
+```ts
+type EmailNameType = 'welcome' | 'subscribe' | 'marketing'
+type AdminEmailNameType = 'new_account' | 'ticket_created'
+
+// 'welcome_email' | 'subscribe_email' | 'marketing_email' | 'new_account_email' | 'ticket_created_email'
+type EmailTypes = `${EmailNameType | AdminEmailNameType}_email`
+```
+
+## String Manipulation
+TypeScript includes 4 helpers to manipulate string types:
+
+- Uppercase: Converts the string to uppercase letters.
+- Lowercase: Converts the string to lowercase letters.
+- Capitalize: Converts the first characters to uppercase (does not modify the rest of the string).
+- Uncapitalize: Converts the first characters to lowercase (does not modify the rest of the string).
+
+Below you can see an example of each one of them:
+
+```ts
+Uppercase<'giovanni benussi'> // 'GIOVANNI BENUSSI'
+Lowercase<'GIOVANNI Benussi'> // 'giovanni benussi'
+Capitalize<'giovanni benussi'> // 'Giovanni benussi'
+Uncapitalize<'Giovanni Benussi'> // 'giovanni Benussi'
+```
+
+## Combining  Template Literals with String Manipulation
+
+You can combine the concepts that we just learn to build flexible types. For example, we can define event handlers in a convenient way:
+
+```ts
+type EventName = 'change' | 'click'
+type EventType = `on${Capitalize(EventName)}`
+
+function listen(event: EventType) {
+  // return ...
+}
+
+listen('onChange') // ✅
+listen('onClick') // ✅
+listen('onAnotherEvent') // ❌
+```
+
+## Conclusion
+
+As we just learned, TypeScript provides some handy ways to manipulate strings to make our code flexible. You could always write everything by hand, but having some automation may help you keep your code DRY.
+
+If you want to learn more about template literal types, I highly suggest you to take a look at [TypeScript's official docs](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html) on the subject.
+
+As always, feel free to [reach me out on Twitter](https://twitter.com/giovannibenussi) if you have any question!
