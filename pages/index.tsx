@@ -54,7 +54,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
         title="All posts"
         description="Giovanni Benussi Blog"
         image={null}
-        canonicalURL={baseURL + '/'}
+        canonicalURL={baseURL}
       />
 
       <Layout>

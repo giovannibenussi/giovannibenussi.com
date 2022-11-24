@@ -107,7 +107,7 @@ export const getStaticProps: GetStaticProps<any, Params> = async (context) => {
   const imageSRC = slugToImageSRC(slug)
   if (mdxSource.frontmatter) {
     mdxSource.frontmatter.image = imageSRC
-    mdxSource.frontmatter.canonicalURL = `${baseURL}/blog/${slug}/`
+    mdxSource.frontmatter.canonicalURL = `${baseURL}/blog/${slug}`
   }
 
   return { props: { mdxSource, imageSRC } }
