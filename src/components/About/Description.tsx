@@ -2,7 +2,7 @@ export function Description() {
   return (
     <div className="mb-20">
       <p>
-        I'm a software developer that really loves his job. I've been working on
+        I&apos;m a software developer that really loves his job. I&apos;ve been working on
         the web since Dreamweaver was a thing (I feel kinda old writing this
         😅).
       </p>
