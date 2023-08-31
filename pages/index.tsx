@@ -6,6 +6,7 @@ import { serialize } from 'next-mdx-remote/serialize'
 import { SEO } from 'components/SEO'
 import { getPlaiceholder } from 'plaiceholder'
 import { baseURL } from 'src/config'
+import avatar from 'images/giovanni-benussi-avatar.jpg'
 
 export const slugToImageSRC = (slug: string) => `/images/blog/${slug}.jpg`
 
@@ -53,7 +54,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
       <SEO
         title="All posts"
         description="Giovanni Benussi Blog"
-        image={null}
+        image={baseURL + avatar.src}
         canonicalURL={baseURL}
       />
 
