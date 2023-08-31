@@ -58,7 +58,7 @@ import Warning from 'components/Warning'
 import CanIUse from 'components/CanIUse'
 import { slugToImageSRC } from '.'
 import { baseURL } from 'src/config'
-import Subscribe from 'components/Subscribe'
+import SubscribeCard from 'components/SubscribeCard'
 
 function removeSuffix(text: string, suffix: string): string {
   return text.endsWith(suffix) ? text.slice(0, -suffix.length) : text
@@ -149,7 +149,7 @@ const components = {
 const BlogEntry: NextPage<BlogEntryProps> = ({ mdxSource }) => {
   return (
     <BlogPostLayout frontmatter={mdxSource.frontmatter}>
-      <Subscribe />
+      <SubscribeCard hideIfAlreadySubscribed/>
       <MDXRemote {...mdxSource} components={components} />
     </BlogPostLayout>
   )

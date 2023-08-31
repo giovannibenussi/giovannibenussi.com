@@ -40,6 +40,7 @@ export function Menu() {
         </div>
         <div className="not-prose flex items-center justify-end gap-8 text-xl text-gray-800 dark:text-white">
           <MenuLink href="/blog">Blog</MenuLink>
+          <MenuLink href="/subscribe">Subscribe</MenuLink>
           <MenuLink href="/about">About</MenuLink>
           <ToggleDarkModeButton />
         </div>
