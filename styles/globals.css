@@ -29,6 +29,10 @@ body {
   padding-right: var(--content-padding);
 }
 
+a.link {
+  @apply text-indigo-500 hover:text-indigo-400;
+}
+
 a.link-green {
   @apply text-green-500;
 }
@@ -44,4 +48,3 @@ a.link-blue {
 a.link-blue:hover {
   @apply text-blue-400;
 }
-
