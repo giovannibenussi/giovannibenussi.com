@@ -1,6 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createClient } from '@libsql/client'
 import { z } from 'zod'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const client = createClient({
   url: 'libsql://right-toad-giovannibenussi.turso.io',
@@ -41,6 +44,14 @@ export default async function handler(
       sql: 'insert or replace into subscribers (email) values (?)',
       args: [email.data],
     })
+
+    resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: 'giovanni.benussi@usach.cl',
+      subject: 'New subscriber! 🎉',
+      html: `<p>${email.data} just subscribed to your newsletter!</p>`,
+    })
+
     return res.status(200).json({
       success: true,
     })
