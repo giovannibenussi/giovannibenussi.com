@@ -32,6 +32,7 @@ module.exports = withSentryConfig(
 
     org: "giovannibenussicom-40b52f7f2",
     project: "javascript-nextjs",
+    authToken: process.env.SENTRY_AUTH_TOKEN
   },
   {
     // For all available options, see:
