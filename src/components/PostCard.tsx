@@ -57,7 +57,6 @@ export function PostCard({
               }}
             />
           )}
-          {JSON.stringify(post)}
           <section className="flex flex-grow flex-col px-4 py-4">
             <div>
               <h1 className="mt-0 mb-2 text-xl font-bold hover:text-blue-500">
