@@ -1,0 +1,261 @@
+---
+title: "Setup Turso on a Remix application"
+date: "2023-08-24T09:00:00.000Z"
+description: "Integrate a edge database in minutes with Remix"
+featuredImage: ./featured-image.jpg
+featuredImageUnsplashAuthor: George Pagan III
+featuredImageUnsplashURL: https://unsplash.com/@gpthree?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText 
+featuredImageUnsplashURLLink: https://unsplash.com/photos/2nbIfDeT4t4?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+featuredImageUnsplashAltText: A pillar with a note that says "You are important".
+draft: true
+---
+
+In a few words, Turso is SQLite at the edge. It provides low latency and the free plan is very generous.
+This whole tutorial should take you between 5 and 10 minutes, so let's go for it!
+
+## Setup Turso
+
+### Install Turso CLI
+
+Install the Turso CLI either with brew or curl as shown below.
+
+```sh
+# brew
+brew install tursodatabase/tap/turso
+
+# curl
+curl -sSfL https://get.tur.so/install.sh | bash
+```
+
+### Sign Up / Log In
+
+Next, create an account or login:
+
+```sh
+# Sign up
+turso auth signup
+
+# Log in
+turso auth login
+```
+
+This will open a browser window so you can either create an account or log in to it.
+
+### Create a Database
+
+Let's create a database called `remix-test`.
+
+```sh
+turso db show remix-test
+
+# ➜ turso db show remix-test
+# Name:           remix-test
+# URL:            libsql://remix-test-giovannibenussi.turso.io
+# ID:             xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+# Locations:      scl
+# Size:           0 B
+
+# Database Instances:
+# NAME                  TYPE        LOCATION
+# loving-marionette     primary     scl
+
+```
+
+Remember the value for the *URL* field because we need it for later (in this case, it is *libsql://remix-test-giovannibenussi.turso.io*)
+
+Next, you need to get an authentication token for your database:
+
+```sh
+turso db tokens create remix-test
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+Copy your database url and the just generated token and provide them as parameters to the `createClient` function:
+
+```js
+const client = createClient({
+  url: "libsql://your-database.turso.io",
+  authToken: "your-auth-token"
+});
+```
+
+Note: If you forgot the *URL* value, you can retrieve it again among other useful data with `turso db show remix-test`.
+Note 2: I recommend you to extract this client to a separate file so it's easy to share with other loaders/actions.
+
+Ideally, you should provide those parameters as environment variables (for example, as `TURSO_URL` and `TURSO_AUTH_TOKEN`) so you don't leak them to your shared repository.
+
+### Setup Test Data
+
+Let's connect to your newly created SQLite database by running the command below:
+
+```sh
+turso db shell remix-test
+
+# Connected to remix-test at https://remix-test-giovannibenussi.turso.io
+
+# Welcome to Turso SQL shell!
+
+# Type ".quit" to exit the shell and ".help" to list all available commands.
+
+# →
+```
+
+Type the following SQL code to *create* a users table.
+
+```sql
+create table users (
+  email text unique not null
+);
+```
+
+And run the following code to insert our first user to our database:
+
+```sql
+insert into users values ('giovanni.benussi@usach.cl');
+```
+
+## Setup Application
+### Install dependencies
+
+Install the [`@libsql/client`](https://github.com/libsql/libsql-client-ts) library:
+
+npm;
+```sh
+npm install @libsql/client
+```
+
+yarn:
+```sh
+yarn add @libsql/client
+```
+
+### Query Data
+
+Define a loader using plain SQL:
+
+```jsx
+export async function loader() {
+  try {
+    const rs = await client.execute("select * from users");
+    const users = rs.rows;
+    return { success: true, users };
+  } catch (e) {
+    console.error(e);
+    return { success: false, users: [] };
+  }
+}
+```
+
+Load and display the data in our component:
+
+```js
+export default function Index() {
+  const { users } = useLoaderData();
+
+  return (
+    <div>
+      <h1>Users</h1>
+      <ul>
+        {users.map((user) => (
+          <li key={user.email}>{user.email}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+That's it. With a few lines of code we get our data from a Edge Database with very low latencies!
+
+### Insert Data
+
+Add a `Form` to our component to allow to insert an email:
+
+```js
+<Form method="POST">
+  <input name="email" />
+</Form>
+```
+
+And finally, add an action that handles the form below.
+
+```js
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const email = formData.get("email");
+
+  try {
+    await client.execute({
+      sql: "insert into users values (:email)",
+      args: { email },
+    });
+    return { success: true };
+  } catch (e) {
+    console.error(e);
+    return { success: false };
+  }
+};
+```
+
+The code above does retrieves the email from form data using `formData` and runs the corresponding SQL code to insert the new email into the database.
+
+## Full Source Code
+
+Here's the full source code that we wrote in this article.
+
+You can use it as a template and copy-paste it to get started quickly.
+
+```js
+import { Form, useLoaderData } from "@remix-run/react";
+import { createClient } from "@libsql/client";
+
+const client = createClient({
+  url: "libsql://your-database.turso.io",
+  authToken: "your-auth-token"
+});
+
+export async function loader() {
+  try {
+    const rs = await client.execute("select * from users");
+    const users = rs.rows;
+    return { success: true, users };
+  } catch (e) {
+    console.error(e);
+    return { success: false, users: [] };
+  }
+}
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const email = formData.get("email");
+
+  try {
+    await client.execute({
+      sql: "insert into users values (:email)",
+      args: { email },
+    });
+    return { success: true };
+  } catch (e) {
+    console.error(e);
+    return { success: false };
+  }
+};
+
+export default function Index() {
+  const { users } = useLoaderData();
+
+  return (
+    <div>
+      <h1>Users</h1>
+      <ul>
+        {users.map((user) => (
+          <li key={user.email}>{user.email}</li>
+        ))}
+      </ul>
+      <Form method="POST">
+        <input name="email" />
+      </Form>
+    </div>
+  );
+}
+```

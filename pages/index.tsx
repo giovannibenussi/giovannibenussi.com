@@ -34,7 +34,9 @@ export const getStaticProps: GetStaticProps = async () => {
       slug,
     })
   }
-  posts = posts.filter((post) => !post?.draft)
+  if (process.env.NODE_ENV === 'production') {
+    posts = posts.filter((post) => !post?.draft)
+  }
   posts = posts.sort((post1, post2) => (post2?.date > post1?.date ? 1 : -1))
 
   return {

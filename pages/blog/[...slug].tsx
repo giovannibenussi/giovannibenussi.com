@@ -149,8 +149,8 @@ const components = {
 const BlogEntry: NextPage<BlogEntryProps> = ({ mdxSource }) => {
   return (
     <BlogPostLayout frontmatter={mdxSource.frontmatter}>
-      <SubscribeCard hideIfAlreadySubscribed/>
       <MDXRemote {...mdxSource} components={components} />
+      <SubscribeCard hideIfAlreadySubscribed />
     </BlogPostLayout>
   )
 }

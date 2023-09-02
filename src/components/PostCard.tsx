@@ -4,6 +4,7 @@ import { TimeIcon } from '@chakra-ui/icons'
 import { formatDate } from 'lib/util'
 import { Badge } from 'components/Badge'
 import { IGetPlaiceholderReturn } from 'plaiceholder'
+import c from 'classnames'
 
 export type PostDataType = {
   bestOf?: boolean
@@ -33,7 +34,10 @@ export function PostCard({
         <article
           itemScope
           itemType="http://schema.org/Article"
-          className="prose flex h-full flex-col overflow-hidden rounded-xl border border-gray-100 shadow-md hover:shadow-2xl dark:prose-invert dark:border-gray-900 dark:bg-gray-900"
+          className={c(
+            'prose flex h-full flex-col overflow-hidden rounded-xl border shadow-md hover:shadow-2xl dark:prose-invert dark:border-gray-900 dark:bg-gray-900',
+            post.draft ? 'border-green-500' : 'border-gray-100'
+          )}
           style={{
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
           }}
@@ -53,6 +57,7 @@ export function PostCard({
               }}
             />
           )}
+          {JSON.stringify(post)}
           <section className="flex flex-grow flex-col px-4 py-4">
             <div>
               <h1 className="mt-0 mb-2 text-xl font-bold hover:text-blue-500">
