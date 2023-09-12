@@ -6,7 +6,7 @@ import { Resend } from 'resend'
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const client = createClient({
-  url: 'libsql://right-toad-giovannibenussi.turso.io',
+  url: process.env.TURSO_URL as string,
   authToken: process.env.TURSO_AUTH_TOKEN,
 })
 
