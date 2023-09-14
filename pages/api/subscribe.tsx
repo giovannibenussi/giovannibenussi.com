@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { z } from 'zod'
 import { Resend } from 'resend'
 import { db } from 'src/db'
+import { subscribers } from 'src/schema'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -35,10 +36,10 @@ export default async function handler(
   }
 
   try {
-    await db.execute({
-      sql: 'insert or replace into subscribers (email) values (?)',
-      args: [email.data],
-    })
+    await db
+      .insert(subscribers)
+      .values({ email: email.data })
+      .onConflictDoNothing()
 
     resend.emails.send({
       from: 'onboarding@resend.dev',
