@@ -4,6 +4,7 @@
 
 import * as Sentry from '@sentry/nextjs'
 
+if (process.env.NODE_ENV !== 'development') {
 Sentry.init({
   dsn: 'https://43d100c8834532a9181bf49fcb828a08@o4505799392165888.ingest.sentry.io/4505799394525184',
 
@@ -13,3 +14,4 @@ Sentry.init({
   // Setting this option to true will print useful information to the console while you're setting up Sentry.
   debug: false,
 })
+}
