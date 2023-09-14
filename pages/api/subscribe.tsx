@@ -1,14 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { createClient } from '@libsql/client'
 import { z } from 'zod'
 import { Resend } from 'resend'
+import { db } from 'src/db'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
-
-const client = createClient({
-  url: process.env.TURSO_URL as string,
-  authToken: process.env.TURSO_AUTH_TOKEN,
-})
 
 type ResponseData =
   | {
@@ -16,7 +11,7 @@ type ResponseData =
     }
   | {
       success: false
-      errorMessage: string
+      userFacingError: string
     }
 
 export default async function handler(
@@ -28,19 +23,19 @@ export default async function handler(
   if (!email.success) {
     return res.status(400).json({
       success: false,
-      errorMessage: 'Email is not valid',
+      userFacingError: 'Email is not valid',
     })
   }
 
   if (!email) {
     return res.status(400).json({
       success: false,
-      errorMessage: 'Email is not present',
+      userFacingError: 'Email is not present',
     })
   }
 
   try {
-    await client.execute({
+    await db.execute({
       sql: 'insert or replace into subscribers (email) values (?)',
       args: [email.data],
     })
@@ -59,7 +54,7 @@ export default async function handler(
     console.error(e)
     return res.status(500).json({
       success: false,
-      errorMessage: 'There has been an error',
+      userFacingError: 'There has been an error',
     })
   }
 }
