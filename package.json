@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3002",
-    "build": "next build",
+    "build": "next build && cp _headers .next/.",
     "start": "next start",
     "lint": "next lint",
     "tscheck": "yarn run tsc --project ./tsconfig.json --noEmit"
