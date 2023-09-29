@@ -25,6 +25,15 @@ module.exports = withMDX({
           },
         ],
       },
+      {
+        source: '/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'max-age=31536000',
+          },
+        ],
+      },
     ]
   },
 })
