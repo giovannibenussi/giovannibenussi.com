@@ -10,7 +10,7 @@ type SEOProps = {
 export function SEO(props: SEOProps) {
   return (
     <Head>
-      <title>{props.title} | Giovanni Benussi Blog</title>
+      <title>{`${props.title} | Giovanni Benussi Blog`}</title>
       <meta name="description" content={props.description} />
       <link rel="icon" href="/favicon.ico" />
       <meta name="og:title" content={props.title} />

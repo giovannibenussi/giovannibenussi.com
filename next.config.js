@@ -2,13 +2,12 @@
 
 const withMDX = require('@next/mdx')({
   options: {
-    remarkPlugins: [require('remark-prism')],
+    remarkPlugins: ['remark-prism'],
   },
 })
 
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
 }
 
 module.exports = withMDX({
