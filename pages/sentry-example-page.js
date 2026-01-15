@@ -47,22 +47,15 @@ export default function Home() {
             margin: "18px",
           }}
           onClick={async () => {
-            const transaction = Sentry.startTransaction({
-              name: "Example Frontend Transaction",
-            });
-
-            Sentry.configureScope((scope) => {
-              scope.setSpan(transaction);
-            });
-
-            try {
-              const res = await fetch("/api/sentry-example-api");
-              if (!res.ok) {
-                throw new Error("Sentry Example Frontend Error");
+            await Sentry.startSpan(
+              { name: "Example Frontend Transaction" },
+              async () => {
+                const res = await fetch("/api/sentry-example-api");
+                if (!res.ok) {
+                  throw new Error("Sentry Example Frontend Error");
+                }
               }
-            } finally {
-              transaction.finish();
-            }
+            );
           }}
         >
           Throw error!
