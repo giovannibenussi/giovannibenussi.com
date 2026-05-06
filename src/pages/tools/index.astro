@@ -1,0 +1,153 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+
+type Tone = 'emerald' | 'amber' | 'violet' | 'sky';
+type IconName = 'code-bracket-square' | 'arrows-right-left' | 'shield-check' | 'arrow-left-on-rectangle';
+
+type Tool = {
+	href: string;
+	title: string;
+	description: string;
+	tone: Tone;
+	icon: IconName;
+};
+
+const tools: Tool[] = [
+	{
+		href: '/tools/json-format',
+		title: 'JSON Format',
+		description: 'Format JSON and query values with dot paths. Auto-repair for malformed input.',
+		tone: 'emerald',
+		icon: 'code-bracket-square',
+	},
+	{
+		href: '/tools/json-compare',
+		title: 'JSON Compare',
+		description: 'Compare two JSON documents side by side with a visual diff.',
+		tone: 'amber',
+		icon: 'arrows-right-left',
+	},
+	{
+		href: '/tools/jwt-decoder',
+		title: 'JWT Decoder',
+		description: 'Decode JSON Web Tokens. Inspect header, payload, and expiration claims.',
+		tone: 'violet',
+		icon: 'shield-check',
+	},
+	{
+		href: '/tools/encoder-decoder',
+		title: 'Encoder / Decoder',
+		description: 'Encode and decode Base64, URL components, and HTML entities in one place.',
+		tone: 'sky',
+		icon: 'arrow-left-on-rectangle',
+	},
+];
+
+const iconToneClasses: Record<Tone, string> = {
+	emerald:
+		'bg-emerald-100 text-emerald-600 group-hover:bg-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-400 dark:group-hover:bg-emerald-500/30',
+	amber:
+		'bg-amber-100 text-amber-600 group-hover:bg-amber-200 dark:bg-amber-500/20 dark:text-amber-400 dark:group-hover:bg-amber-500/30',
+	violet:
+		'bg-violet-100 text-violet-600 group-hover:bg-violet-200 dark:bg-violet-500/20 dark:text-violet-400 dark:group-hover:bg-violet-500/30',
+	sky:
+		'bg-sky-100 text-sky-600 group-hover:bg-sky-200 dark:bg-sky-500/20 dark:text-sky-400 dark:group-hover:bg-sky-500/30',
+};
+
+const cardToneClasses: Record<Tone, string> = {
+	emerald:
+		'border-emerald-200/70 bg-emerald-50/40 hover:border-emerald-300 hover:bg-emerald-50 dark:border-emerald-500/20 dark:bg-emerald-500/5 dark:hover:border-emerald-500/40 dark:hover:bg-emerald-500/10',
+	amber:
+		'border-amber-200/70 bg-amber-50/40 hover:border-amber-300 hover:bg-amber-50 dark:border-amber-500/20 dark:bg-amber-500/5 dark:hover:border-amber-500/40 dark:hover:bg-amber-500/10',
+	violet:
+		'border-violet-200/70 bg-violet-50/40 hover:border-violet-300 hover:bg-violet-50 dark:border-violet-500/20 dark:bg-violet-500/5 dark:hover:border-violet-500/40 dark:hover:bg-violet-500/10',
+	sky:
+		'border-sky-200/70 bg-sky-50/40 hover:border-sky-300 hover:bg-sky-50 dark:border-sky-500/20 dark:bg-sky-500/5 dark:hover:border-sky-500/40 dark:hover:bg-sky-500/10',
+};
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title="Tools" description="Small web tools by Giovanni Benussi" />
+	</head>
+	<body>
+		<Header />
+		<main class="mx-auto w-full max-w-3xl px-4 py-16">
+			<section class="mb-12">
+				<p class="mb-2 font-mono text-[11px] tracking-[0.22em] text-slate-400 uppercase dark:text-slate-500">
+					— Tools
+				</p>
+				<h1 class="m-0 text-3xl font-semibold tracking-tight text-gray-900 dark:text-gray-50">
+					Small utilities I use every day
+				</h1>
+				<p class="mt-4 text-base leading-relaxed text-gray-600 dark:text-gray-400">
+					A growing collection of lightweight, browser-only tools. Everything here runs locally — no data leaves your machine.
+				</p>
+				<p class="mt-3 text-base leading-relaxed text-gray-600 dark:text-gray-400">
+					I build these when I get annoyed by existing web tools. Local-only because I paste production data into them and would rather not send it anywhere.
+				</p>
+			</section>
+
+			<section>
+				<ul class="m-0 flex list-none flex-col gap-4 p-0">
+					{
+						tools.map((tool) => (
+							<li>
+								<a
+									href={tool.href}
+									class:list={[
+										'group flex items-start gap-5 rounded-2xl border p-6 no-underline transition-all hover:shadow-md',
+										cardToneClasses[tool.tone],
+									]}
+								>
+									<div class:list={[
+										'flex size-12 shrink-0 items-center justify-center rounded-xl transition-colors',
+										iconToneClasses[tool.tone],
+									]}>
+										{tool.icon === 'code-bracket-square' && (
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width={1.5} stroke="currentColor" width="22" height="22" aria-hidden="true">
+												<path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75 16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
+											</svg>
+										)}
+										{tool.icon === 'arrows-right-left' && (
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width={1.5} stroke="currentColor" width="22" height="22" aria-hidden="true">
+												<path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+											</svg>
+										)}
+										{tool.icon === 'shield-check' && (
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width={1.5} stroke="currentColor" width="22" height="22" aria-hidden="true">
+												<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+											</svg>
+										)}
+										{tool.icon === 'arrow-left-on-rectangle' && (
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width={1.5} stroke="currentColor" width="22" height="22" aria-hidden="true">
+												<path stroke-linecap="round" stroke-linejoin="round" d="m7.49 12-3.75 3.75m0 0 3.75 3.75m-3.75-3.75h16.5V4.499" />
+											</svg>
+										)}
+									</div>
+									<div class="flex-1">
+										<h3 class="m-0 text-lg font-semibold tracking-tight text-gray-900 transition-colors group-hover:text-indigo-600 dark:text-gray-50 dark:group-hover:text-indigo-400">
+											{tool.title}
+										</h3>
+										<p class="m-0 mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+											{tool.description}
+										</p>
+									</div>
+									<span class="mt-1 shrink-0 text-slate-300 transition-transform group-hover:translate-x-0.5 group-hover:text-indigo-500 dark:text-slate-600 dark:group-hover:text-indigo-400">
+										<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+											<polyline points="9 18 15 12 9 6" />
+										</svg>
+									</span>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

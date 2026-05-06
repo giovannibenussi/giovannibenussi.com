@@ -1,0 +1,74 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import readingTime from 'reading-time';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import Badge from '../components/Badge.astro';
+import avatar from '../assets/giovanni-benussi-avatar.jpg';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.map((post) => ({
+		...post,
+		readTime: readingTime(post.body ?? '').text,
+	}));
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main class="w-full max-w-3xl mx-auto px-4 py-16">
+			<section class="mb-16 flex items-center gap-5">
+				<Image src={avatar} alt="Giovanni Benussi" width={160} height={160} class="size-20 shrink-0 rounded-xl object-cover" />
+				<div>
+					<p class="mb-2 font-mono text-[11px] tracking-[0.22em] text-slate-400 uppercase dark:text-slate-500">
+						— Giovanni Benussi
+					</p>
+					<p class="m-0 text-base leading-relaxed text-gray-700 dark:text-gray-300">
+						Software developer writing about the web, tools, and things I learn along the way.
+					</p>
+				</div>
+			</section>
+			<section>
+				<ul class="list-none m-0 p-0 flex flex-col gap-16">
+					{
+						posts.map((post) => (
+							<li>
+								<article class="group flex flex-row gap-6 items-start">
+									{post.data.heroImage && (
+										<a href={`/blog/${post.id}/`} class="shrink-0 w-40 h-40 overflow-hidden rounded-xl no-underline">
+											<Image width={320} height={320} src={post.data.heroImage} alt="" class="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105" />
+										</a>
+									)}
+									<div class="flex-1 flex flex-col min-w-0">
+										<div class="mb-1 flex items-center gap-2 text-sm text-gray-500">
+											<span>
+												<FormattedDate date={post.data.pubDate} /> · {post.readTime}
+											</span>
+											{post.data.trending && <Badge>Trending</Badge>}
+										</div>
+										<a href={`/blog/${post.id}/`} class="no-underline">
+											<h3 class="m-0 text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-50 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{post.data.title}</h3>
+											{post.data.description && (
+												<p class="m-0 mt-2 text-base leading-relaxed text-gray-500 dark:text-gray-400">{post.data.description}</p>
+											)}
+										</a>
+									</div>
+								</article>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

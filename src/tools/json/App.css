@@ -1,0 +1,125 @@
+/* Navigation Command Bar Styles */
+.nav-command-bar {
+  box-shadow:
+    0 0 0 1px rgba(68, 71, 90, 0.3),
+    0 4px 24px -4px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.nav-command-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  pointer-events: none;
+}
+
+.nav-btn {
+  position: relative;
+}
+
+.nav-btn::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle at center,
+    currentColor 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.nav-btn:hover::before {
+  opacity: 0.06;
+}
+
+.nav-btn:active {
+  transform: scale(0.98);
+}
+
+/* Blinking cursor effect for active nav item */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.nav-btn span:first-child span {
+  animation: cursor-blink 1.2s ease-in-out infinite;
+}
+
+/* Logo Styles */
+.logo-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.logo-container {
+  position: relative;
+}
+
+.logo-icon {
+  filter: drop-shadow(0 0 8px rgba(189, 147, 249, 0.3));
+  transition: filter 0.3s ease;
+}
+
+.logo-btn:hover .logo-icon {
+  filter: drop-shadow(0 0 12px rgba(189, 147, 249, 0.5));
+}
+
+/* Subtle breathing animation for the logo */
+@keyframes logo-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.logo-svg {
+  animation: logo-breathe 4s ease-in-out infinite;
+}
+
+/* Brace hover animations */
+.logo-brace-left,
+.logo-brace-right {
+  transition: transform 0.3s ease;
+}
+
+.logo-btn:hover .logo-brace-left {
+  transform: translateX(-1px);
+}
+
+.logo-btn:hover .logo-brace-right {
+  transform: translateX(1px);
+}
+
+/* Center dot pulse on hover */
+@keyframes dot-pulse {
+  0%, 100% { opacity: 1; r: 2; }
+  50% { opacity: 0.7; r: 2.5; }
+}
+
+.logo-btn:hover .logo-dot {
+  animation: dot-pulse 0.8s ease-in-out infinite;
+}
+
+/* Logo text gradient shimmer effect */
+.logo-text {
+  position: relative;
+}
+
+.logo-btn:hover .logo-text span:first-child {
+  text-shadow: 0 0 20px rgba(189, 147, 249, 0.6);
+}
+
+.logo-btn:hover .logo-text span:last-child {
+  text-shadow: 0 0 20px rgba(139, 233, 253, 0.6);
+}
