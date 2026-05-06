@@ -1,0 +1,28 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import JsonCompareEntry from '../../tools/json/JsonCompareEntry';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title="JSON Compare" description="Compare two JSON documents side by side with a visual diff" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="mx-auto w-full max-w-6xl px-4 pt-8">
+				<h1 class="m-0 flex items-center gap-3 text-3xl font-semibold tracking-tight text-gray-900 dark:text-gray-50">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28" aria-hidden="true" class="text-slate-400 dark:text-slate-500">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+					</svg>
+					JSON Compare
+				</h1>
+			</div>
+			<JsonCompareEntry client:only="react" />
+		</main>
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,28 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import EncoderDecoderEntry from '../../tools/encoder-decoder/EncoderDecoderEntry';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title="Encoder / Decoder" description="Encode and decode Base64, URL, and HTML entities in your browser" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="mx-auto w-full max-w-6xl px-4 pt-8">
+				<h1 class="m-0 flex items-center gap-3 text-3xl font-semibold tracking-tight text-gray-900 dark:text-gray-50">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28" aria-hidden="true" class="text-slate-400 dark:text-slate-500">
+						<path stroke-linecap="round" stroke-linejoin="round" d="m7.49 12-3.75 3.75m0 0 3.75 3.75m-3.75-3.75h16.5V4.499" />
+					</svg>
+					Encoder / Decoder
+				</h1>
+			</div>
+			<EncoderDecoderEntry client:only="react" />
+		</main>
+		<Footer />
+	</body>
+</html>

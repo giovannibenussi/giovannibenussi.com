@@ -1,0 +1,28 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import JsonFormatEntry from '../../tools/json/JsonFormatEntry';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title="JSON Format" description="Format and query JSON in your browser" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="mx-auto w-full max-w-6xl px-4 pt-8">
+				<h1 class="m-0 flex items-center gap-3 text-3xl font-semibold tracking-tight text-gray-900 dark:text-gray-50">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28" aria-hidden="true" class="text-slate-400 dark:text-slate-500">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75 16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
+					</svg>
+					JSON Format
+				</h1>
+			</div>
+			<JsonFormatEntry client:only="react" />
+		</main>
+		<Footer />
+	</body>
+</html>

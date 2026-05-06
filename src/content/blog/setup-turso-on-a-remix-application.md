@@ -1,0 +1,284 @@
+---
+title: "Setup Turso on a Remix application"
+description: "Integrate a edge database in minutes with Remix"
+pubDate: "Sep 06 2023"
+heroImage: "../../assets/blog/setup-turso-on-a-remix-application/featured-image.jpg"
+---
+
+In a few words, [Turso](https://turso.tech/) is SQLite at the edge. It provides low latency and the free plan is very generous.
+
+The integration of Turso with [Remix](https://remix.run/) is seamless, so this whole tutorial should take you between 5 and 10 minutes and you'll end up with a production ready database, so let's go for it!
+
+## Setup Turso
+
+### Install Turso CLI
+
+Install the Turso CLI either with brew or curl as shown below.
+
+```sh
+# brew
+brew install tursodatabase/tap/turso
+
+# curl
+curl -sSfL https://get.tur.so/install.sh | bash
+```
+
+### Sign Up / Log In
+
+Next, create an account or login to it if you already have one:
+
+```sh
+# Sign up
+turso auth signup
+
+# Log in
+turso auth login
+```
+
+This will open a browser window to continue the process in Turso's website.
+
+### Create a Database
+
+Let's create a database called `remix-test` by running `turso db create`, which takes around 10 seconds to finish.
+
+```sh
+turso db create remix-test
+```
+
+Next, ask for the URL string by running `turso db show`.
+
+```sh
+turso db show remix-test
+
+# Name:           remix-test
+# URL:            libsql://remix-test-giovannibenussi.turso.io
+# ID:             f55f93b3-4816-11ee-ad50-1a39a03d9c0e
+# Locations:      scl
+# Size:           20 kB
+
+# Database Instances:
+# NAME                  TYPE        LOCATION
+# loving-marionette     primary     scl
+```
+
+Remember the value for the *URL* field because we need it for later (in this case, it is *libsql://remix-test-giovannibenussi.turso.io*)
+
+Next, you need to get an authentication token for your database:
+
+```sh
+turso db tokens create remix-test
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+Add the database url generated previoudly and generated token we just generated and provide them as parameters to the `createClient` function:
+
+```js
+const client = createClient({
+  url: "libsql://your-connection-string.turso.io",
+  authToken: "your-auth-token"
+});
+```
+
+Ideally, you should provide those parameters as environment variables (for example, as `TURSO_URL` and `TURSO_AUTH_TOKEN`) so you don't leak them to your shared repository.
+
+
+### Setup Test Data
+
+Let's connect to your database by running the command below:
+
+```sh
+turso db shell remix-test
+
+# Connected to remix-test at https://remix-test-giovannibenussi.turso.io
+
+# Welcome to Turso SQL shell!
+
+# Type ".quit" to exit the shell and ".help" to list all available commands.
+
+# →
+```
+
+Type the following SQL code to *create* a users table.
+
+```sql
+create table users (
+  email text unique not null
+);
+```
+
+Then, run the following code to insert our first user:
+
+```sql
+insert into users values ('giovanni.benussi@usach.cl');
+```
+
+Now, let's go to setup our application to interact with this database.
+
+## Setup Application
+### Install dependencies
+
+Install the [`@libsql/client`](https://github.com/libsql/libsql-client-ts) library:
+
+npm;
+```sh
+npm install @libsql/client
+```
+
+yarn:
+```sh
+yarn add @libsql/client
+```
+
+### Query Data
+
+Define a loader to query all users using SQL:
+
+```jsx
+export async function loader() {
+  try {
+    const rs = await client.execute("select * from users");
+    const users = rs.rows;
+    return { success: true, users };
+  } catch (e) {
+    console.error(e);
+    return { success: false, users: [] };
+  }
+}
+```
+
+Load and display the data in our component:
+
+```js
+export default function Index() {
+  const { users } = useLoaderData();
+
+  return (
+    <div>
+      <h1>Users</h1>
+      <ul>
+        {users.map((user) => (
+          <li key={user.email}>{user.email}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+That's it. With a few lines of code we get our data from a Edge Database with very low latency!
+
+### Insert Data
+
+Add a `Form` to our component to allow to type an email:
+
+```js
+<Form method="POST">
+  <input name="email" />
+</Form>
+```
+
+And finally, add an action that handles the form submission.
+
+```js
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const email = formData.get("email");
+
+  try {
+    await client.execute({
+      sql: "insert into users values (:email)",
+      args: { email },
+    });
+    return { success: true };
+  } catch (e) {
+    console.error(e);
+    return { success: false };
+  }
+};
+```
+
+The code above does retrieves the email from form data using `formData` and runs the corresponding SQL code to insert the new email into the users table.
+
+## Full Source Code
+
+Here's the full source code that we wrote in this article.
+
+You can use it as a template and copy-paste it to get started quickly.
+
+```js
+import { Form, useLoaderData } from "@remix-run/react";
+import { createClient } from "@libsql/client";
+
+const client = createClient({
+  url: "libsql://your-database.turso.io",
+  authToken: "your-auth-token"
+});
+
+export async function loader() {
+  try {
+    const rs = await client.execute("select * from users");
+    const users = rs.rows;
+    return { success: true, users };
+  } catch (e) {
+    console.error(e);
+    return { success: false, users: [] };
+  }
+}
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const email = formData.get("email");
+
+  try {
+    await client.execute({
+      sql: "insert into users values (:email)",
+      args: { email },
+    });
+    return { success: true };
+  } catch (e) {
+    console.error(e);
+    return { success: false };
+  }
+};
+
+export default function Index() {
+  const { users } = useLoaderData();
+
+  return (
+    <div>
+      <h1>Users</h1>
+      <ul>
+        {users.map((user) => (
+          <li key={user.email}>{user.email}</li>
+        ))}
+      </ul>
+      <Form method="POST">
+        <input name="email" />
+      </Form>
+    </div>
+  );
+}
+```
+
+## TypeScript Support
+
+
+To add TypeScript support, you need to add a [type assertion](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) to transform the result from the database to a custom `UserType` array:
+
+```ts
+type UserType = {
+  email: string;
+};
+
+const users = rs.rows as unknown as Array<UserType>;
+```
+
+The `as unknown as` part is called [double assertion](https://basarat.gitbook.io/typescript/type-system/type-assertion#double-assertion) and we need it to make our code work, otherwise you'll get an error because the type of `rs.rows`(`Row[]`) can't be converted to `UserType[]` directly because they don't have any data that overlaps. To solve this, we can convert the result to `unknown` first (because `unknown` is compatible with all types) and then convert it `UserType`. You can read more about that approach in this [SO thread](https://stackoverflow.com/questions/69399211/typescript-why-does-as-unknown-as-x-work).
+
+## Conclusion
+
+In just a few minutes, and with a few lines of code, we created a production ready database and integrated it with out Remix application.
+
+You can improve this code by adding validation (e.g: by using [Zod](https://zod.dev/)) before persisting data. Also, if you want, you can switch to a ORM like [Drizzle](https://orm.drizzle.team/docs/installation-and-db-connection/sqlite/turso).
+
+As always, you can [reach me out on Twitter](https://twitter.com/giovannibenussi) if you have any question.

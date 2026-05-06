@@ -1,0 +1,97 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+html {
+	height: 100%;
+}
+body {
+	font-family: var(--font-content);
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	background: var(--color-white);
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	color: var(--color-gray-900);
+	font-size: 16px;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+main {
+	flex: 1;
+}
+strong,
+b {
+	font-weight: 700;
+}
+main a {
+	color: var(--color-indigo-500);
+}
+main a:hover {
+	color: var(--color-indigo-600);
+}
+.dark main a {
+	color: var(--color-indigo-400);
+}
+.dark main a:hover {
+	color: var(--color-indigo-300);
+}
+code {
+	padding: 2px 6px;
+	border-radius: var(--radius-sm);
+	font-family: "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", monospace;
+	font-size: 0.85em;
+	background-color: var(--color-slate-100);
+	border: 1px solid var(--color-slate-200);
+	color: var(--color-slate-800);
+}
+.dark code {
+	background-color: var(--color-slate-800);
+	border-color: var(--color-slate-700);
+	color: var(--color-slate-200);
+}
+/* Tailwind Typography wraps inline <code> in backtick quotes via pseudo-elements. Drop them. */
+.prose code::before,
+.prose code::after {
+	content: none;
+}
+pre {
+	padding: calc(var(--spacing) * 6);
+	border-radius: var(--radius-lg);
+}
+pre > code {
+	all: unset;
+}
+blockquote {
+	border-left: 4px solid var(--color-indigo-500);
+	padding: 0 0 0 calc(var(--spacing) * 5);
+	margin: 0;
+	font-size: var(--text-lg);
+}
+hr {
+	border: none;
+	border-top: 1px solid var(--color-gray-200);
+}
+
+.dark body {
+	background-color: var(--color-slate-950);
+	color: var(--color-gray-200);
+}
+.dark :is(h1, h2, h3, h4, h5, h6) {
+	color: var(--color-gray-50);
+}
+.dark hr {
+	border-top-color: var(--color-gray-700);
+}
+.dark .astro-code {
+	background-color: var(--shiki-dark-bg) !important;
+}
+.dark .astro-code,
+.dark .astro-code span {
+	color: var(--shiki-dark) !important;
+}

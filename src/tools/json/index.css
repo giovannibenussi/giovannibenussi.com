@@ -1,0 +1,271 @@
+/* Theme Custom Properties - Dark Mode (Default) */
+:root,
+:root.dark {
+  /* Core Dark Palette */
+  --dracula-bg: #282a36;
+  --dracula-bg-darker: #1e1f29;
+  --dracula-bg-lighter: #343746;
+  --dracula-current: #44475a;
+  --dracula-selection: #44475a;
+  --dracula-fg: #f8f8f2;
+  --dracula-comment: #6272a4;
+  --dracula-cyan: #8be9fd;
+  --dracula-green: #50fa7b;
+  --dracula-orange: #ffb86c;
+  --dracula-pink: #ff79c6;
+  --dracula-purple: #bd93f9;
+  --dracula-red: #ff5555;
+  --dracula-yellow: #f1fa8c;
+
+  /* UI Specific */
+  --dracula-border: #44475a;
+  --dracula-border-focus: #bd93f9;
+  --dracula-shadow: rgba(0, 0, 0, 0.4);
+  --dracula-glow: rgba(189, 147, 249, 0.15);
+}
+
+/* Light Mode */
+:root:not(.dark) {
+  /* Core Light Palette */
+  --dracula-bg: #ffffff;
+  --dracula-bg-darker: #f5f5f7;
+  --dracula-bg-lighter: #fafafa;
+  --dracula-current: #e8e8ec;
+  --dracula-selection: #d4d4d8;
+  --dracula-fg: #1a1a2e;
+  --dracula-comment: #6b7280;
+  --dracula-cyan: #0891b2;
+  --dracula-green: #059669;
+  --dracula-orange: #d97706;
+  --dracula-pink: #db2777;
+  --dracula-purple: #7c3aed;
+  --dracula-red: #dc2626;
+  --dracula-yellow: #ca8a04;
+
+  /* UI Specific */
+  --dracula-border: #e5e7eb;
+  --dracula-border-focus: #7c3aed;
+  --dracula-shadow: rgba(0, 0, 0, 0.1);
+  --dracula-glow: rgba(124, 58, 237, 0.1);
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+.json-tools-root {
+  font-family: var(--font-content, system-ui, -apple-system, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: transparent;
+  color: inherit;
+}
+
+/* Custom scrollbar — scoped to the tool */
+.json-tools-root ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.json-tools-root ::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 5px;
+}
+
+.json-tools-root ::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 5px;
+}
+
+.json-tools-root ::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* Code and monospace — scoped */
+.json-tools-root code,
+.json-tools-root pre,
+.json-tools-root .font-mono,
+.json-tools-root textarea {
+  font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+  font-feature-settings: 'liga' 1, 'calt' 1;
+}
+
+/* Selection — scoped to the tool so we don't recolor blog selections */
+.json-tools-root ::selection {
+  background: rgba(99, 102, 241, 0.3);
+}
+
+/* Radix UI Theme overrides for the tool */
+.json-tools-root .radix-themes {
+  --accent-9: var(--dracula-purple) !important;
+  --accent-10: var(--dracula-pink) !important;
+}
+
+.json-tools-root [data-radix-collection-item] {
+  transition: all 0.2s ease !important;
+}
+
+.json-tools-root button,
+.json-tools-root input,
+.json-tools-root textarea,
+.json-tools-root select {
+  transition: all 0.2s ease;
+}
+
+/* Glow effect for interactive elements */
+.glow-purple {
+  box-shadow: 0 0 20px rgba(189, 147, 249, 0.3);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(139, 233, 253, 0.3);
+}
+
+.glow-pink {
+  box-shadow: 0 0 20px rgba(255, 121, 198, 0.3);
+}
+
+/* Animated gradient border effect */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    45deg,
+    var(--dracula-purple),
+    var(--dracula-pink),
+    var(--dracula-cyan),
+    var(--dracula-purple)
+  );
+  background-size: 300% 300%;
+  animation: gradient-shift 8s ease infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gradient-border:focus-within::before {
+  opacity: 1;
+}
+
+/* Radix component tweaks — scoped to the tool */
+.json-tools-root .rt-Badge {
+  font-family: 'Fira Code', monospace;
+}
+
+.json-tools-root .rt-TextFieldInput {
+  font-family: 'Fira Code', monospace;
+}
+
+/* --------------------------------------------------------------------------
+   CodeMirror search panel — style to match Radix/Tailwind look on our pages.
+   Only targets the built-in Cmd/Ctrl+F panel; the editor itself is untouched.
+   -------------------------------------------------------------------------- */
+.json-tools-root .cm-panels {
+  background: var(--color-panel-solid, white);
+  border-top: 1px solid var(--gray-5, rgb(226 232 240));
+}
+.dark .json-tools-root .cm-panels {
+  background: rgb(15 23 42);
+  border-top-color: rgb(30 41 59);
+}
+
+.json-tools-root .cm-search {
+  padding: 10px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.json-tools-root .cm-search label {
+  font-size: 13px;
+  color: rgb(100 116 139);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.dark .json-tools-root .cm-search label {
+  color: rgb(148 163 184);
+}
+
+.json-tools-root .cm-textfield {
+  border: 1px solid rgb(226 232 240);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  background: white;
+  color: rgb(15 23 42);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.json-tools-root .cm-textfield:focus {
+  border-color: var(--accent-9, rgb(99 102 241));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-9, rgb(99 102 241)) 25%, transparent);
+}
+.dark .json-tools-root .cm-textfield {
+  background: rgb(15 23 42);
+  border-color: rgb(30 41 59);
+  color: rgb(226 232 240);
+}
+
+.json-tools-root .cm-button {
+  appearance: none;
+  background: linear-gradient(rgb(248 250 252), rgb(241 245 249));
+  border: 1px solid rgb(226 232 240);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 13px;
+  color: rgb(51 65 85);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  background-image: none;
+}
+.json-tools-root .cm-button:hover {
+  background: rgb(241 245 249);
+  border-color: rgb(203 213 225);
+}
+.json-tools-root .cm-button:active {
+  background: rgb(226 232 240);
+}
+.dark .json-tools-root .cm-button {
+  background: rgb(30 41 59);
+  border-color: rgb(51 65 85);
+  color: rgb(226 232 240);
+}
+.dark .json-tools-root .cm-button:hover {
+  background: rgb(51 65 85);
+  border-color: rgb(71 85 105);
+}
+.dark .json-tools-root .cm-button:active {
+  background: rgb(71 85 105);
+}
+
+.json-tools-root .cm-panel.cm-search [name="close"] {
+  background: transparent;
+  border: none;
+  color: rgb(100 116 139);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.json-tools-root .cm-panel.cm-search [name="close"]:hover {
+  background: rgb(241 245 249);
+  color: rgb(15 23 42);
+}
+.dark .json-tools-root .cm-panel.cm-search [name="close"]:hover {
+  background: rgb(30 41 59);
+  color: rgb(226 232 240);
+}

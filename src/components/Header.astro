@@ -1,0 +1,62 @@
+---
+import { SITE_TITLE } from '../consts';
+import HeaderLink from './HeaderLink.astro';
+---
+
+<header class="sticky top-0 z-[100] border-b border-gray-200/60 bg-white/80 backdrop-blur-md backdrop-saturate-150 dark:border-indigo-400/10 dark:bg-slate-950/80">
+	<div class="mx-auto flex h-14 max-w-[1200px] items-center justify-between px-6">
+		<div>
+			<h2 class="m-0 text-base font-semibold tracking-tight">
+				<a href="/" class="text-gray-900 no-underline dark:text-gray-100">{SITE_TITLE}</a>
+			</h2>
+		</div>
+		<div class="flex items-center gap-4">
+			<HeaderLink
+				href="/about"
+				class="flex items-center text-sm text-gray-500 no-underline transition-colors hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-300"
+			>
+				About
+			</HeaderLink>
+			<HeaderLink
+				href="/tools"
+				class="flex items-center text-sm text-gray-500 no-underline transition-colors hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-300"
+			>
+				Tools
+			</HeaderLink>
+			<button
+				id="theme-toggle"
+				type="button"
+				aria-label="Toggle dark mode"
+				class="flex cursor-pointer items-center justify-center border-0 bg-transparent p-0 text-gray-500 transition-colors hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-300"
+			>
+				<svg class="hidden size-[18px] dark:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+				</svg>
+				<svg class="block size-[18px] dark:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+				</svg>
+			</button>
+			<a
+				href="https://x.com/giovannibenussi"
+				target="_blank"
+				class="flex items-center text-gray-500 no-underline transition-colors hover:text-indigo-600 max-sm:hidden dark:text-gray-400 dark:hover:text-indigo-300"
+			>
+				<span class="sr-only">Follow Giovanni on X</span>
+				<svg viewBox="0 0 24 24" aria-hidden="true" class="size-4">
+					<path
+						fill="currentColor"
+						d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+					></path>
+				</svg>
+			</a>
+		</div>
+	</div>
+</header>
+
+<script is:inline>
+	const toggle = document.getElementById('theme-toggle');
+	toggle?.addEventListener('click', () => {
+		const isDark = document.documentElement.classList.toggle('dark');
+		localStorage.setItem('theme', isDark ? 'dark' : 'light');
+	});
+</script>

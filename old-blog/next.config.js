@@ -8,33 +8,16 @@ const withMDX = require('@next/mdx')({
 
 const nextConfig = {
   reactStrictMode: true,
+  output: 'export',
+  basePath: '/old',
+  assetPrefix: '/old',
+  images: { unoptimized: true },
+  trailingSlash: true,
 }
 
 module.exports = withMDX({
   ...nextConfig,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-  async headers() {
-    return [
-      {
-        source: '/about',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'max-age=30, stale-while-revalidate=59',
-          },
-        ],
-      },
-      {
-        source: '/static/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'max-age=31536000',
-          },
-        ],
-      },
-    ]
-  },
 })
 
 // Injected content via Sentry wizard below
