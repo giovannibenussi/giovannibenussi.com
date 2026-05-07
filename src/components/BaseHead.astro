@@ -94,3 +94,7 @@ const analyticsEnabled = import.meta.env.PROD;
 {analyticsEnabled && umamiWebsiteId && (
 	<script defer src="https://cloud.umami.is/script.js" data-website-id={umamiWebsiteId}></script>
 )}
+
+{analyticsEnabled && (
+	<script defer src="https://ebit.ebit-client.workers.dev/script.js"></script>
+)}
