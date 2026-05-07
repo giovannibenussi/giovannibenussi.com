@@ -1,0 +1,20 @@
+src/components/BaseHead.astro
+  s_71307a5f5ae39e::t_031de9fabe201e 22
+  s_71307a5f5ae39e::t_426b653726c034 99-100
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "07ae35514f51e27e6ed24c7afbc970e471698181",
+  "prompts": {},
+  "sessions": {
+    "s_71307a5f5ae39e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e5cc9e1e-13f6-4be9-b6d6-e0dcabf2247e",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Giovanni <giovanni.benussi@usach.cl>"
+    }
+  }
+}
