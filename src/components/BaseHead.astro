@@ -19,6 +19,7 @@ const { title, description, image = FallbackImage } = Astro.props;
 
 const gaId = import.meta.env.PUBLIC_GA_ID;
 const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
+const ebitId = import.meta.env.PUBLIC_EBIT_ID;
 const analyticsEnabled = import.meta.env.PROD;
 ---
 
@@ -95,6 +96,6 @@ const analyticsEnabled = import.meta.env.PROD;
 	<script defer src="https://cloud.umami.is/script.js" data-website-id={umamiWebsiteId}></script>
 )}
 
-{analyticsEnabled && (
-	<script defer src="https://ebit.ebit-client.workers.dev/script.js"></script>
+{analyticsEnabled && ebitId && (
+	<script defer src={`https://ebit.ebit-client.workers.dev/script.js?id=${ebitId}`}></script>
 )}
