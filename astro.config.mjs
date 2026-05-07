@@ -1,6 +1,7 @@
 // @ts-check
 
 import mdx from '@astrojs/mdx';
+import partytown from '@astrojs/partytown';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
@@ -29,7 +30,13 @@ const oldBlogDevRewrite = {
 
 export default defineConfig({
   site: 'https://example.com',
-  integrations: [mdx(), sitemap(), react(), oldBlogDevRewrite],
+  integrations: [
+    mdx(),
+    sitemap(),
+    react(),
+    partytown({ config: { forward: ['dataLayer.push'] } }),
+    oldBlogDevRewrite,
+  ],
   redirects: {
     '/old': '/old/index.html',
   },
