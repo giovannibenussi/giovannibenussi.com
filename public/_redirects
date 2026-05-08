@@ -3,8 +3,4 @@
 # search-engine ranking flow to the surviving copy.
 /blog/a-complete-guide-to-useref           /old/blog/a-complete-guide-to-useref           301
 /blog/mastering-useref                     /old/blog/mastering-useref                     301
-/blog/adjacent-sibling-combinator          /old/blog/adjacent-sibling-combinator          301
-/blog/general-sibling-combinator           /old/blog/general-sibling-combinator           301
-/blog/css-counters                         /old/blog/css-counters                         301
-/blog/inline-css-variables                 /old/blog/inline-css-variables                 301
 /blog/polyfill-flex-gap                    /old/blog/polyfill-flex-gap                    301
