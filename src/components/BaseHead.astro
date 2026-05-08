@@ -97,5 +97,10 @@ const analyticsEnabled = import.meta.env.PROD;
 )}
 
 {analyticsEnabled && ebitId && (
-	<script defer src={`https://ebit.ebit-client.workers.dev/script.js?id=${ebitId}`}></script>
+	<>
+		<script is:inline>
+			window.ebit = window.ebit || { q: [], track: function () { this.q.push(arguments) } };
+		</script>
+		<script defer src={`https://ebit.ebit-client.workers.dev/script.js?id=${ebitId}`}></script>
+	</>
 )}
