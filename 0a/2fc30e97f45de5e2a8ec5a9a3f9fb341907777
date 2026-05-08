@@ -1,0 +1,25 @@
+src/content/blog/filter-console-log-by-domain.md
+  s_15ca444768bd97::t_cf0706e29be498 1-36
+src/content/blog/css-modules-on-create-react-app.md
+  s_15ca444768bd97::t_11ae7b63d0aadc 1-114
+src/content/blog/touch-targets.md
+  s_15ca444768bd97::t_4640f67ab11e75 1-74
+src/content/blog/introduction-to-react-server-components.md
+  s_15ca444768bd97::t_e153187fb70385 1-137
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "0a2fc30e97f45de5e2a8ec5a9a3f9fb341907777",
+  "prompts": {},
+  "sessions": {
+    "s_15ca444768bd97": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "99cc0223-fe88-469c-bdee-547d3d2d9b0b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Giovanni <giovanni.benussi@usach.cl>"
+    }
+  }
+}
