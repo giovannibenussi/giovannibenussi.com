@@ -1,0 +1,25 @@
+src/content/blog/adjacent-sibling-combinator.md
+  s_15ca444768bd97::t_35195236194189 1-124
+src/content/blog/inline-css-variables.md
+  s_15ca444768bd97::t_3c64c46d4184d5 1-42
+src/content/blog/general-sibling-combinator.md
+  s_15ca444768bd97::t_686a210735220d 1-83
+src/content/blog/css-counters.md
+  s_15ca444768bd97::t_18483b280a742c 1-196
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "be1a563902f2ceb2d9b16fcb8401ce6115b02480",
+  "prompts": {},
+  "sessions": {
+    "s_15ca444768bd97": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "99cc0223-fe88-469c-bdee-547d3d2d9b0b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Giovanni <giovanni.benussi@usach.cl>"
+    }
+  }
+}
