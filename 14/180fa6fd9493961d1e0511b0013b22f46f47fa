@@ -1,0 +1,25 @@
+old-blog/src/components/Layout/NewBlogBanner.tsx
+  s_63f7e651cac22e::t_568a013690f055 37
+  s_63f7e651cac22e::t_e1219dccaef8f6 48
+  s_63f7e651cac22e::t_414fbfbee36621 23-27,29-36,38-47,49-51,54,58-62,64
+  s_63f7e651cac22e::t_e1467b1b89f671 3,5-6,8-9,12,14,16-17,21-22,55-57,65-66,68
+  s_63f7e651cac22e::t_badffd34d40b83 52
+old-blog/src/components/Layout/index.tsx
+  s_63f7e651cac22e::t_79dbebb8cb9fae 3,15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "14180fa6fd9493961d1e0511b0013b22f46f47fa",
+  "prompts": {},
+  "sessions": {
+    "s_63f7e651cac22e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2172b241-9633-4d15-a839-b2cc5be8652a",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Giovanni <giovanni.benussi@usach.cl>"
+    }
+  }
+}
