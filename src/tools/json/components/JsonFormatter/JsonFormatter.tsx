@@ -195,18 +195,6 @@ export function JsonFormatter() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const handlePasteFormatted = useCallback((pastedText: string) => {
-    try {
-      const parsed = JSON.parse(pastedText);
-      const formatted = JSON.stringify(parsed, null, 2);
-      setJson(formatted);
-      return true;
-    } catch {
-      // Not valid JSON, let the default paste behavior happen
-      return false;
-    }
-  }, []);
-
   const handleCopy = useCallback(async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -502,7 +490,6 @@ export function JsonFormatter() {
             <JsonCodeEditor
               value={json}
               onChange={setJson}
-              onPasteFormatted={handlePasteFormatted}
               placeholder="Paste JSON here..."
               height="70vh"
             />
