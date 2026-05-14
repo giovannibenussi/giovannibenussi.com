@@ -1,74 +1,70 @@
 ---
 import { Image } from 'astro:assets';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
+import ContactForm from '../components/ContactForm.tsx';
+import XIcon from '../components/XIcon.astro';
 import avatar from '../assets/giovanni-benussi-avatar.jpg';
+import Page from '../layouts/Page.astro';
+import { X_HANDLE, X_URL } from '../consts';
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title="About" description="About Giovanni Benussi" />
-	</head>
-	<body>
-		<Header />
-		<main class="w-full max-w-3xl mx-auto px-4 py-12">
-			<article class="prose dark:prose-invert max-w-none">
-				<h1>About Me</h1>
-				<div class="not-prose my-8 aspect-square max-h-64 overflow-hidden rounded-xl">
-					<Image src={avatar} alt="Giovanni Benussi's avatar" class="w-full h-full object-cover" />
-				</div>
-				<p>
-					My name is Giovanni Benussi. I'm a software developer that really loves his job. I've been working on the web since Dreamweaver was a thing (I feel kinda old writing this 😅).
-				</p>
-				<p>
-					I have a master's in Computer Science.
-				</p>
-				<p>
-					Nowadays, I work primarily with React and the whole JavaScript ecosystem.
-				</p>
-				<p>Current Stack:</p>
-				<ul>
-					<li>Node.js</li>
-					<li>React</li>
-					<li>TypeScript</li>
-					<li>Remix</li>
-					<li>Next.js</li>
-					<li>Cloud with AWS and Cloudflare</li>
-				</ul>
-				<p>I've also worked considerably (+4 years) with the following:</p>
-				<ul>
-					<li>Rails</li>
-					<li>Sidekiq</li>
-					<li>Redis</li>
-					<li>Server Management</li>
-				</ul>
-				<p>
-					Also, I spoke at <a href="https://remix.run/conf/2023">RemixConf</a>:
-				</p>
-				<iframe
-					class="w-full aspect-video"
-					src="https://www.youtube.com/embed/TR_wn2y-SYQ?si=rZrqqysA-4zRHqjB"
-					title="YouTube video player"
-					frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					allowfullscreen
-				></iframe>
-				<h2>Contact</h2>
-				<ul>
-					<li>
-						Twitter: <a href="https://twitter.com/giovannibenussi">@giovannibenussi</a>
-					</li>
-					<li>
-						GitHub: <a href="https://github.com/giovannibenussi">@giovannibenussi</a>
-					</li>
-					<li>
-						Website: <a href="https://giovannibenussi.com/">giovannibenussi.com</a>
-					</li>
-				</ul>
-			</article>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Page title="About" description="About Giovanni Benussi">
+	<article class="prose dark:prose-invert max-w-none">
+		<h1>About Me</h1>
+		<div class="not-prose my-8 aspect-square max-h-64 overflow-hidden rounded-xl">
+			<Image src={avatar} alt="Giovanni Benussi's avatar" class="w-full h-full object-cover" />
+		</div>
+		<p>
+			My name is Giovanni Benussi. I'm a software developer that really loves his job. I've been working on the web since Dreamweaver was a thing (I feel kinda old writing this 😅).
+		</p>
+		<p>
+			I have a master's in Computer Science.
+		</p>
+		<p>
+			Nowadays, I work primarily with React and the whole JavaScript ecosystem.
+		</p>
+		<p>Current Stack:</p>
+		<ul>
+			<li>Node.js</li>
+			<li>React</li>
+			<li>TypeScript</li>
+			<li>Remix</li>
+			<li>Next.js</li>
+			<li>Cloud with AWS and Cloudflare</li>
+		</ul>
+		<p>I've also worked considerably (+4 years) with the following:</p>
+		<ul>
+			<li>Rails</li>
+			<li>Sidekiq</li>
+			<li>Redis</li>
+			<li>Server Management</li>
+		</ul>
+		<p>
+			Also, I spoke at <a href="https://remix.run/conf/2023">RemixConf</a>:
+		</p>
+		<iframe
+			class="w-full aspect-video"
+			src="https://www.youtube.com/embed/TR_wn2y-SYQ?si=rZrqqysA-4zRHqjB"
+			title="YouTube video player"
+			frameborder="0"
+			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+			allowfullscreen
+		></iframe>
+		<h2>Contact</h2>
+		<ul>
+			<li>
+				<XIcon class="inline size-[0.9em] align-baseline" />:
+				<a href={X_URL} target="_blank" rel="noopener">@{X_HANDLE}</a>
+			</li>
+			<li>
+				GitHub: <a href="https://github.com/giovannibenussi">@giovannibenussi</a>
+			</li>
+			<li>
+				Website: <a href="https://giovannibenussi.com/">giovannibenussi.com</a>
+			</li>
+		</ul>
+		<p>Or send me a note directly:</p>
+	</article>
+	<div class="mt-6">
+		<ContactForm client:visible />
+	</div>
+</Page>

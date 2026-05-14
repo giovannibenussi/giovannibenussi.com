@@ -17,6 +17,6 @@ const { Content } = await render(post);
 const { text: readTime } = readingTime(post.body ?? '');
 ---
 
-<BlogPost {...post.data} readTime={readTime}>
+<BlogPost {...post.data} readTime={readTime} id={post.id}>
 	<Content />
 </BlogPost>

@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import FormattedDate from './FormattedDate.astro';
+
+type Props = {
+	posts: CollectionEntry<'blog'>[];
+};
+
+const { posts } = Astro.props;
+---
+
+{
+	posts.length > 0 && (
+		<aside class="mt-12 pt-8 pb-12 border-t border-gray-200 dark:border-gray-800" data-related-articles>
+			<h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">
+				Related articles
+			</h2>
+			<div class="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-gray-200 dark:divide-gray-800">
+				{posts.slice(0, 2).map((post) => (
+					<a
+						href={`/blog/${post.id}/`}
+						data-track-slug={post.id}
+						class="group block py-6 sm:py-0 sm:px-6 first:pt-0 last:pb-0 first:sm:pl-0 last:sm:pr-0 no-underline"
+					>
+						{post.data.heroImage && (
+							<div class="mb-3 overflow-hidden rounded-xl">
+								<Image
+									width={600}
+									height={300}
+									src={post.data.heroImage}
+									alt=""
+									class="block w-full aspect-[2/1] object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+								/>
+							</div>
+						)}
+						<div class="mb-1 text-sm text-gray-500">
+							<FormattedDate date={post.data.pubDate} />
+						</div>
+						<h3 class="text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-50 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors m-0">
+							{post.data.title}
+						</h3>
+						{post.data.description && (
+							<p class="m-0 mt-2 text-base leading-relaxed text-gray-500 dark:text-gray-400 line-clamp-2">
+								{post.data.description}
+							</p>
+						)}
+					</a>
+				))}
+			</div>
+		</aside>
+	)
+}
+
+<script>
+	import { track } from '../lib/analytics';
+
+	document.querySelectorAll<HTMLAnchorElement>('[data-related-articles] a[data-track-slug]').forEach((link) => {
+		link.addEventListener('click', () => {
+			track('related_article_click', { slug: link.dataset.trackSlug });
+		});
+	});
+</script>

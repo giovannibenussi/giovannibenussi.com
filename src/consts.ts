@@ -3,3 +3,7 @@
 
 export const SITE_TITLE = 'Giovanni Benussi';
 export const SITE_DESCRIPTION = 'Welcome to my website!';
+
+export const CONTACT_EMAIL = 'giovanni.benussi.paredes@gmail.com';
+export const X_HANDLE = 'giovannibenussi';
+export const X_URL = `https://x.com/${X_HANDLE}`;

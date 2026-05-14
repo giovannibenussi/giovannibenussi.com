@@ -10,10 +10,12 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "env:pull": "netlify env:list --plain > .env.tmp && mv .env.tmp .env && echo '✓ .env updated from Netlify' || { rm .env.tmp; echo '✗ Failed to pull env vars from Netlify'; exit 1; }",
     "build-old-blog": "cd old-blog && pnpm install && pnpm run build && rm -rf ../public/old && cp -r out ../public/old && find ../public/old -name '*.html' -exec sed -i '' -e 's|=\"/images/|=\"/old/images/|g' -e 's|=\"/favicon.ico\"|=\"/old/favicon.ico\"|g' -e 's|=\"/favicon-small.ico\"|=\"/old/favicon-small.ico\"|g' -e 's|href=\"/blog/|href=\"/old/blog/|g' {} +"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",
+    "@astrojs/netlify": "^7.0.8",
     "@astrojs/partytown": "^2.1.7",
     "@astrojs/react": "^5.0.0",
     "@astrojs/rss": "^4.0.18",
@@ -42,6 +44,7 @@
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "reading-time": "^1.5.0",
+    "resend": "^6.12.3",
     "sharp": "^0.34.3",
     "tailwindcss": "^4.2.2"
   },
