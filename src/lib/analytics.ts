@@ -3,8 +3,8 @@ type Props = Record<string, string | number | boolean | null | undefined>;
 declare global {
 	interface Window {
 		dataLayer?: unknown[];
-		umami?: { track: (name: string, props?: Props) => void };
-		ebit?: { track: (name: string, props?: Props) => void };
+		track?: (name: string, data?: Props) => void;
+		plausible?: (name: string, options?: { props?: Record<string, string> }) => void;
 	}
 }
 
@@ -22,12 +22,22 @@ export function track(event: string, props?: Props): void {
 	} catch {}
 
 	try {
-		window.umami?.track(event, props);
+		window.track?.(event, props);
 	} catch {}
 
 	try {
-		window.ebit?.track(event, props);
+		const plausibleProps = propsForPlausible(props);
+		window.plausible?.(event, plausibleProps ? { props: plausibleProps } : undefined);
 	} catch {}
+}
+
+function propsForPlausible(props?: Props): Record<string, string> | undefined {
+	if (!props) return undefined;
+
+	const entries = Object.entries(props).flatMap(([key, value]) =>
+		value === null || value === undefined ? [] : [[key, String(value)]],
+	);
+	return entries.length > 0 ? Object.fromEntries(entries) : undefined;
 }
 
 function arguments_(event: string, props?: Props): IArguments {

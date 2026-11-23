@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Badge, Button, Callout, Code, HoverCard, IconButton, Kbd, Text, TextField, Tooltip } from '@radix-ui/themes';
 import { CopyIcon, CheckIcon, CrossCircledIcon, InfoCircledIcon, MagnifyingGlassIcon, TrashIcon } from '@radix-ui/react-icons';
 import { jsonrepair } from 'jsonrepair';
+import { track } from '../../../../lib/analytics';
 import { JsonCodeEditor } from '../JsonCodeEditor';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 
@@ -195,11 +196,12 @@ export function JsonFormatter() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const handleCopy = useCallback(async (text: string) => {
+  const handleCopy = useCallback(async (text: string, target: 'input' | 'result') => {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+      track('json_format_copy', { target });
     } catch {
       // Failed to copy
     }
@@ -477,7 +479,7 @@ export function JsonFormatter() {
             <Button
               variant="outline"
               size="1"
-              onClick={() => handleCopy(json)}
+              onClick={() => handleCopy(json, 'input')}
             >
               {copied ? <CheckIcon /> : <CopyIcon />}
               {copied ? 'Copied!' : 'Copy'}
@@ -504,7 +506,7 @@ export function JsonFormatter() {
               <Button
                 variant="outline"
                 size="1"
-                onClick={() => handleCopy(resultDraft)}
+                onClick={() => handleCopy(resultDraft, 'result')}
               >
                 {copied ? <CheckIcon /> : <CopyIcon />}
                 {copied ? 'Copied!' : 'Copy'}
