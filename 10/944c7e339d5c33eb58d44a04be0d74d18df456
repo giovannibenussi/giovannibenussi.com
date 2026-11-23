@@ -1,0 +1,42 @@
+src/tools/json/components/JsonFormatter/JsonFormatter.tsx
+  s_c6265620e5c3c4::t_080275a6b6776f 199,204
+  s_c6265620e5c3c4::t_cd2b436dcca68c 509
+  s_c6265620e5c3c4::t_b7083d6b9c40ff 5
+  s_c6265620e5c3c4::t_c41839179bfd1b 482
+src/lib/analytics.ts
+  s_c6265620e5c3c4::t_f1fe7b37015d16 6
+  s_c6265620e5c3c4::t_62782429f34d8a 29-30,34-40
+  s_c6265620e5c3c4::t_9948a99372d848 7
+  s_c6265620e5c3c4::t_0f6ffa5fe7fcd0 25
+  s_c6265620e5c3c4::t_aa223364366132 41-42
+src/components/BaseHead.astro
+  s_d77a18ce48c5c4::t_487897dfbafafa 100
+  s_c6265620e5c3c4::t_74ae2baccbd278 93-98
+pnpm-workspace.yaml
+  s_c6265620e5c3c4::t_94320d4609b7d3 2-4
+  s_c6265620e5c3c4::t_417c7e93ba6d14 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "10944c7e339d5c33eb58d44a04be0d74d18df456",
+  "prompts": {},
+  "sessions": {
+    "s_c6265620e5c3c4": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "8220ff39-43d1-477d-99f7-6a0ac8cd7448",
+        "model": "grok-4.7"
+      },
+      "human_author": "Giovanni <giovanni.benussi.paredes@gmail.com>"
+    },
+    "s_d77a18ce48c5c4": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "ebef6f26-0436-49fc-818a-89ca2491635f",
+        "model": "grok-4.7"
+      },
+      "human_author": "Giovanni <giovanni.benussi.paredes@gmail.com>"
+    }
+  }
+}
